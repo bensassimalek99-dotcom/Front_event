@@ -1,0 +1,7 @@
+<div id="loading-area"></div>
+<div class="page-wraper">
+  <app-header *ngIf="showLayout"></app-header>
+  <router-outlet></router-outlet>
+  <app-footer *ngIf="showLayout"></app-footer>
+  <button class="scroltop fa fa-chevron-up" *ngIf="showLayout" (click)="scrollToTop()"></button>
+</div>

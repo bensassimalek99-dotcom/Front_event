@@ -1,0 +1,17 @@
+<div class="dlab-bnr-inr overlay-black-middle" style="background-image:url(assets/images/banner/bnr1.jpg);">
+  <div class="container">
+    <div class="dlab-bnr-inr-entry">
+      <h1 class="text-white">{{title}}</h1>
+      <div class="breadcrumb-row">
+        <ul class="list-inline">
+          <li><a routerLink="/">Home</a></li>
+          <ng-container *ngFor="let crumb of breadcrumb; let last = last">
+            <li *ngIf="!last && crumb.link"><a [routerLink]="crumb.link">{{crumb.label}}</a></li>
+            <li *ngIf="!last && !crumb.link">{{crumb.label}}</li>
+            <li *ngIf="last">{{crumb.label}}</li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

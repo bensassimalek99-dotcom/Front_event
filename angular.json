@@ -1,0 +1,159 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "bizmap-angular": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:component": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:resolver": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/bizmap-angular",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              }
+            ],
+            "styles": [
+              "src/assets/plugins/bootstrap/css/bootstrap.min.css",
+              "src/assets/plugins/fontawesome/css/font-awesome.min.css",
+              "src/assets/plugins/line-awesome/css/line-awesome.min.css",
+              "src/assets/plugins/flaticon/font/flaticon.css",
+              "src/assets/plugins/themify/themify-icons.css",
+              "src/assets/plugins/owl-carousel/owl.carousel.css",
+              "src/assets/plugins/magnific-popup/magnific-popup.css",
+              "src/assets/plugins/bootstrap-select/bootstrap-select.min.css",
+              "src/assets/plugins/rangeslider/rangeslider.css",
+              "src/assets/css/plugins.css",
+              "src/assets/css/style.css",
+              "src/assets/css/templete.css",
+              "src/assets/css/skin/skin-1.css",
+              "src/styles.css"
+            ],
+            "scripts": [
+              "src/assets/js/jquery.min.js",
+              "src/assets/plugins/bootstrap/js/popper.min.js",
+              "src/assets/plugins/bootstrap/js/bootstrap.min.js",
+              "src/assets/plugins/bootstrap-select/bootstrap-select.min.js",
+              "src/assets/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js",
+              "src/assets/plugins/magnific-popup/magnific-popup.js",
+              "src/assets/plugins/counter/waypoints-min.js",
+              "src/assets/plugins/counter/counterup.min.js",
+              "src/assets/plugins/imagesloaded/imagesloaded.js",
+              "src/assets/plugins/masonry/masonry-3.1.4.js",
+              "src/assets/plugins/masonry/masonry.filter.js",
+              "src/assets/plugins/owl-carousel/owl.carousel.js",
+              "src/assets/plugins/rangeslider/rangeslider.js",
+              "src/assets/js/custom.js",
+              "src/assets/js/dz.carousel.js",
+              "src/assets/js/dz.ajax.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5MB",
+                  "maximumError": "10MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "100kB",
+                  "maximumError": "200kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "bizmap-angular:build:production"
+            },
+            "development": {
+              "buildTarget": "bizmap-angular:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

@@ -1,0 +1,215 @@
+    <!-- Content -->
+    <div class="page-content bg-white">
+        <!-- inner page banner -->
+        <div class="dlab-bnr-inr dlab-bnr-inr-sm overlay-black-middle" style="background-image:url(assets/images/banner/bnr2.jpg);">
+            <div class="container">
+                <div class="dlab-bnr-inr-entry">
+                    <h1 class="text-white">Add Listing</h1>
+					<p>Find awesome places, bars, restaurants & activities.</p>
+					<!-- Breadcrumb row -->
+					<div class="breadcrumb-row">
+						<ul class="list-inline">
+							<li><a routerLink="/">Home</a></li>
+							<li>Add Listing</li>
+						</ul>
+					</div>
+					<!-- Breadcrumb row END -->
+                </div>
+            </div>
+        </div>
+        <!-- inner page banner END -->
+		
+        <!-- contact area -->
+        <div class="section-full content-inner">
+            <div class="container">
+				<div class="row">
+					<!-- Left part start -->
+					<div class="col-lg-12">
+						<div class="highlight-bx">
+							<h4 class="title">Returning User? Please <a href="#" class="btn-link">Sign In </a>and if you are a <strong>New User, Continue Below</strong> and register along with this submission.</h4>
+						</div>
+					</div>
+					<div class="col-xl-8 col-lg-7 col-md-12 m-b30">
+						<form class="add-listing-form">
+							<div class="content-box">
+								<div class="content-header">
+									<h3 class="title"> PRIMARY LISTING DETAILS 
+											<i data-toggle="tooltip" data-placement="top" title="Primary Listing Details" class="tooltip-bx fa fa-question-circle"></i>
+									</h3>
+								</div>
+								<div class="content-body">
+									<div class="form-group">
+										<label>Directory Name</label>
+										<input type="text" class="form-control m-b10" placeholder="Staple & Fancy Hotel">
+										<div data-toggle="collapse" data-target="#tagline" role="button" aria-expanded="false" aria-controls="tagline">
+											<input id="check1" type="checkbox">
+											<label for="check1">Does Your Business have a tagline?</label>
+										</div>
+									</div>
+									<div class="form-group collapse" id="tagline">
+										<label>Tagline</label>
+										<input type="text" class="form-control" placeholder="Tagline Example: Best Express Mexican Grill">
+									</div>	
+									<div class="form-group">
+										<label>Directory URL</label>
+										<input type="text" class="form-control" placeholder="http://">
+									</div>
+								</div>
+							</div>
+							<div class="content-box">
+								<div class="content-header">
+									<h3 class="title"> CATEGORY & SERVICES
+									<i data-toggle="tooltip" data-placement="top" title="Category & Services" class="tooltip-bx fa fa-question-circle"></i>
+									</h3>
+								</div>
+								<div class="content-body">
+									<div class="form-group">
+										<label>Industry Or Niche </label>
+										<select>
+											<option>Arts &amp; Entertainment</option>
+											<option>Sport &amp; Fitness</option>
+											<option>Local Businesses</option>
+											<option>Tours &amp; Travel</option>
+											<option>Hospitality</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="content-box">
+								<div class="content-header">
+									<h3 class="title"> SOCIAL MEDIA
+									<i data-toggle="tooltip" data-placement="top" title="Social Media" class="tooltip-bx fa fa-question-circle"></i>
+									</h3>
+								</div>
+								<div class="content-body">
+									<div class="add-social-link social-btn-container">
+										<div class="input-group">
+											<select id="mySelect">
+												<option>Instagram</option>
+												<option>LinkedIn</option>
+												<option>Facebook</option>
+											</select>	
+											<input type="text" class="form-control" placeholder="http://">
+											<div class="input-group-prepend">
+												<button class="site-button btn-block add-social-btn" type="button"><i class="fa fa-plus"></i> Add</button>
+											</div>
+										</div>	
+									</div>
+								</div>
+							</div>
+							<div class="content-box">
+								<div class="content-header">
+									<h3 class="title">MORE INFO
+									<i data-toggle="tooltip" data-placement="top" title="More Info" class="tooltip-bx fa fa-question-circle"></i>
+									</h3>
+								</div>
+								<div class="content-body editor">
+									<div class="form-group ">
+										<label>Description </label>
+										<input name="input" type="text" value="<b>My contents are from <u><span style=&quot;color:rgb(0, 148, 133);&quot;>INPUT</span></u></b>" class="jqte-test">
+									</div>
+									<div class="form-group">
+										<label>Tags Or Keywords (Comma Separated)</label>
+										<textarea class="form-control" id="input-tags">example tags, sortable, autocomplete, edit in place,</textarea>
+									</div>
+								</div>
+							</div>
+							<div class="content-box">
+								<div class="content-header">
+									<h3 class="title"> MEDIA
+										<i data-toggle="tooltip" data-placement="top" title="Social Media" class="tooltip-bx fa fa-question-circle"></i>
+									</h3>
+								</div>
+								<div class="content-body">
+									<div class="form-group">
+										<label>Your Business Video(Optional)</label>
+										<input type="text" class="form-control" placeholder="https://www.youtube.com/">
+									</div>
+									<div class="form-group">
+										<label>Upload Business Logo</label>
+										<input type="file" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf" multiple>
+									</div>
+								</div>
+							</div>
+							<div class="content-box">
+								<div class="content-header">
+									<h3 class="title"> EMAIL ADDRESS
+										<i data-toggle="tooltip" data-placement="top" title=" Email Address" class="tooltip-bx fa fa-question-circle"></i>
+									</h3>
+								</div>
+								<div class="content-body">
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="your contact email">
+										<div class="input-block m-t20">
+											<input id="already-account" type="checkbox">
+											<label for="already-account">Already Have Account?</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<button class="site-button btn-block button-md">Listing Preview</button>
+						</form>							
+					</div>
+					<!-- blog END -->
+					<!-- Side bar start -->
+					<div class="col-xl-4 col-lg-5 col-md-12 m-b30 sticky-top">
+						<aside class="side-bar listing-side-bar">
+							<div class="content-box">
+								<div class="content-header">
+									<h3 class="title"><i class="la la-map-signs m-r5"></i>business info</h3>
+								</div>
+								<div class="content-body">
+									<ul class="icon-box-list">
+										<li><a href="javascript:void(0);" class="icon-box-info">
+											<div class="icon-cell bg-gray">
+												<i class="la la-envelope"></i>
+											</div>
+											<span>info&#64;example.com</span>
+										</a></li>
+										<li><a href="javascript:void(0);" class="icon-box-info">
+											<div class="icon-cell bg-gray">
+												<i class="la la-phone"></i>
+											</div>
+											<span>+91 1 234 5648</span>
+										</a></li>
+										<li><a href="javascript:void(0);" class="icon-box-info">
+											<div class="icon-cell bg-gray">
+												<i class="la la-globe"></i>
+											</div>
+											<span>https://bizmap.dexignzone.com</span>
+										</a></li>
+										<li><a href="javascript:void(0);" class="icon-box-info">
+											<div class="icon-cell bg-gray">
+												<i class="la la-map-marker"></i>
+											</div>
+											<span>Demo Address #8901 Marmora Road</span>
+										</a></li>
+									</ul>
+									<ul class="list-inline m-tb20">
+										<li><a href="javascript:void(0);" class="site-button radius-no sharp"><i class="fa fa-facebook"></i></a></li>
+										<li><a href="javascript:void(0);" class="site-button radius-no sharp"><i class="fa fa-google-plus"></i></a></li>
+										<li><a href="javascript:void(0);" class="site-button radius-no sharp"><i class="fa fa-linkedin"></i></a></li>
+										<li><a href="javascript:void(0);" class="site-button radius-no sharp"><i class="fa fa-instagram"></i></a></li>
+										<li><a href="javascript:void(0);" class="site-button radius-no sharp"><i class="fa fa-twitter"></i></a></li>
+									</ul>
+									<a href="#" class="site-button outline outline-1 button-md btn-block"><i class="la la-envelope"></i> Inbox</a>
+								</div>
+							</div>
+							<div class="content-box">
+								<div class="content-header">
+									<h3 class="title">Add</h3>
+								</div>
+								<div class="content-body">
+									<img class="img-cover" src="assets/images/add/add1.jpg" alt="">
+								</div>
+							</div>							
+						</aside>
+					</div>
+					<!-- Side bar END -->
+				</div>
+            </div>
+        </div>
+		<!-- contact area END -->
+    </div>
+    <!-- Content END-->
+	<!-- Footer -->
