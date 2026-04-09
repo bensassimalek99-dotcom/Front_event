@@ -1,1 +1,189 @@
-<p>login works!</p>
+<div class="auth-page">
+  <!-- Animated background blobs -->
+  <div class="auth-blob auth-blob-1"></div>
+  <div class="auth-blob auth-blob-2"></div>
+  <div class="auth-blob auth-blob-3"></div>
+
+  <div class="container py-4" style="position:relative; z-index:1;">
+    <div class="row align-items-center" style="min-height:100vh;">
+
+      <!-- ── Left marketing panel (desktop only) ── -->
+      <div class="col-lg-6 d-none d-lg-flex left-panel">
+        <div class="left-panel-inner">
+
+          <div class="brand-badge">
+            <i class="fa fa-map-marker"></i>
+            Eventura — Cartographie d'Événements
+          </div>
+
+          <h1 class="left-heading">
+            Bienvenue<br>de retour sur<br>
+            <span class="accent-text">Eventura</span>
+          </h1>
+
+          <p class="left-sub">
+            Reconnectez-vous et continuez à explorer les événements
+            près de chez vous sur notre carte interactive.
+          </p>
+
+          <!-- Stats -->
+          <div class="stats-row">
+            <div class="stat-item">
+              <span class="stat-number">2.5k+</span>
+              <span class="stat-label">Événements</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">12k+</span>
+              <span class="stat-label">Utilisateurs</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">Villes</span>
+            </div>
+          </div>
+
+          <!-- Features -->
+          <ul class="feature-list">
+            <li>
+              <div class="feature-icon"><i class="fa fa-map"></i></div>
+              <div class="feature-text">
+                <strong>Carte Interactive</strong>
+                <span>Visualisez les événements en temps réel</span>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon"><i class="fa fa-search"></i></div>
+              <div class="feature-text">
+                <strong>Recherche Avancée</strong>
+                <span>Filtrez par catégorie, date, distance</span>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon"><i class="fa fa-calendar-check-o"></i></div>
+              <div class="feature-text">
+                <strong>Gestion Facile</strong>
+                <span>Créez et gérez vos propres événements</span>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+
+      <!-- ── Auth card ── -->
+      <div class="col-lg-5 offset-lg-1 col-md-8 offset-md-2 col-12">
+        <div class="auth-card">
+          <div class="auth-card-accent"></div>
+
+          <!-- Logo -->
+          <div class="auth-logo">
+            <span class="auth-logo-text">
+              <span style="color:#667eea;">Event</span><span style="color:#333;">ura</span>
+            </span>
+          </div>
+
+          <!-- Tabs -->
+          <ul class="auth-tabs nav" style="list-style:none; padding-left:0;">
+            <li class="nav-item">
+              <a class="auth-tab active" routerLink="/login">
+                <i class="fa fa-sign-in"></i>Connexion
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="auth-tab" routerLink="/register">
+                <i class="fa fa-user-plus"></i>Inscription
+              </a>
+            </li>
+          </ul>
+
+          <!-- Form body -->
+          <div class="auth-tab-content">
+
+            <div class="form-intro">
+              <h5>Bon retour !</h5>
+              <p>Connectez-vous pour accéder à votre compte</p>
+            </div>
+
+            <!-- Error message -->
+            <div *ngIf="errorMessage" class="auth-alert auth-alert-error">
+              <i class="fa fa-exclamation-circle"></i>
+              {{ errorMessage }}
+            </div>
+
+            <form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
+
+              <!-- Email -->
+              <div class="auth-input-group">
+                <i class="fa fa-envelope input-icon"></i>
+                <input
+                  type="email"
+                  class="auth-input"
+                  name="email"
+                  id="login-email"
+                  [(ngModel)]="loginData.email"
+                  required
+                  email
+                  #email="ngModel"
+                  placeholder="votre@email.com"
+                  aria-label="Adresse email"
+                  autocomplete="email"
+                >
+              </div>
+              <div *ngIf="email.invalid && email.touched" class="auth-field-error">
+                Email valide requis
+              </div>
+
+              <!-- Password -->
+              <div class="auth-input-group">
+                <i class="fa fa-lock input-icon"></i>
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="auth-input"
+                  name="password"
+                  id="login-password"
+                  [(ngModel)]="loginData.password"
+                  required
+                  #password="ngModel"
+                  placeholder="Mot de passe"
+                  aria-label="Mot de passe"
+                  autocomplete="current-password"
+                >
+                <button
+                  type="button"
+                  class="input-eye-btn"
+                  (click)="showPassword = !showPassword"
+                  [attr.aria-label]="showPassword ? 'Masquer' : 'Afficher'"
+                >
+                  <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </button>
+              </div>
+              <div *ngIf="password.invalid && password.touched" class="auth-field-error">
+                Mot de passe requis
+              </div>
+
+              <button
+                type="submit"
+                class="auth-btn-primary"
+                [disabled]="loginForm.invalid || loading"
+              >
+                <i *ngIf="!loading" class="fa fa-sign-in"></i>
+                <span *ngIf="loading" class="auth-spinner"></span>
+                {{ loading ? 'Connexion...' : 'Se connecter' }}
+              </button>
+
+            </form>
+
+            <p class="auth-switch-text">
+              Pas encore de compte ?
+              <a routerLink="/register" class="auth-link-bold">S'inscrire gratuitement</a>
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -458,10 +458,47 @@
 .role-radio:checked + .role-option strong { color: #4611a7; }
 .role-option:hover { border-color: #a78bfa; }
 
+/* ---- Auth logo text ---- */
+.auth-logo-text {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* ---- Alerts ---- */
+.auth-alert {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; border-radius: 8px;
+  font-size: 0.83rem; margin-bottom: 12px;
+}
+.auth-alert-error   { background: #fff0f0; border: 1px solid #fecaca; color: #b91c1c; }
+.auth-alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+
+/* ---- Field error ---- */
+.auth-field-error { font-size: 0.78rem; color: #ef4444; margin: -6px 0 8px 2px; }
+
+/* ---- Spinner inside button ---- */
+.auth-spinner {
+  display: inline-block; width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- Primary button flex ---- */
+.auth-btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.auth-btn-primary i { font-size: 1rem; }
+
 /* ---- Responsive ---- */
 @media (max-width: 576px) {
-  .auth-card { border-radius: 12px; }
+  .auth-card { border-radius: 14px; }
   .auth-logo { padding-top: 1rem; }
-  .auth-tab-content { padding: 1rem; }
+  .auth-tab-content { padding: 1.1rem; }
   .auth-tabs { margin: 1rem 1rem 0; }
+  .left-heading { font-size: 1.9rem; }
 }

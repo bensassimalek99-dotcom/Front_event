@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 declare var $: any;
 
 @Component({
-  selector: 'app-listing-right-sidebar',
-  standalone: true,
-  imports: [RouterModule, CommonModule],
-  templateUrl: './listing-right-sidebar.component.html',
-  styleUrl: './listing-right-sidebar.component.css'
+    selector: 'app-listing-right-sidebar',
+    imports: [RouterModule, CommonModule],
+    templateUrl: './listing-right-sidebar.component.html',
+    styleUrl: './listing-right-sidebar.component.css'
 })
 export class ListingRightSidebarComponent implements AfterViewInit {
   ngAfterViewInit() {

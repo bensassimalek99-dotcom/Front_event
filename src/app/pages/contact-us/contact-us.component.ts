@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 declare var $: any;
 
 @Component({
-  selector: 'app-contact-us',
-  standalone: true,
-  imports: [RouterModule, CommonModule],
-  templateUrl: './contact-us.component.html',
-  styleUrl: './contact-us.component.css'
+    selector: 'app-contact-us',
+    imports: [RouterModule, CommonModule],
+    templateUrl: './contact-us.component.html',
+    styleUrl: './contact-us.component.css'
 })
 export class ContactUsComponent implements AfterViewInit {
   ngAfterViewInit() {

@@ -7,14 +7,13 @@ import { HeaderComponent } from './shared/header/header.component';
 
 declare var $: any;
 
-const NO_LAYOUT_ROUTES = ['/register', '/coming-soon'];
+const NO_LAYOUT_ROUTES = ['/register', '/login', '/coming-soon'];
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, CommonModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    imports: [RouterOutlet, HeaderComponent, FooterComponent, CommonModule],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   showLayout = true;

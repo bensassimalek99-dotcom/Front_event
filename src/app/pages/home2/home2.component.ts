@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 declare var $: any;
 
 @Component({
-  selector: 'app-home2',
-  standalone: true,
-  imports: [RouterModule, CommonModule],
-  templateUrl: './home2.component.html',
-  styleUrl: './home2.component.css'
+    selector: 'app-home2',
+    imports: [RouterModule, CommonModule],
+    templateUrl: './home2.component.html',
+    styleUrl: './home2.component.css'
 })
 export class Home2Component implements AfterViewInit {
   ngAfterViewInit() {

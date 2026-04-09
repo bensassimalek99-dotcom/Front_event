@@ -1,0 +1,209 @@
+/* ============================================================
+   EVENTURA HEADER
+============================================================ */
+
+:host { display: block; }
+
+/* ---- Sticky container ---- */
+.ev-header {
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* ---- Inner row ---- */
+.ev-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  height: 64px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ---- Logo ---- */
+.ev-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo-icon {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
+  flex-shrink: 0;
+}
+.logo-event {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #667eea;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.logo-ura {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #1f2937;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+/* ---- Desktop nav ---- */
+.ev-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+.ev-nav-link {
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4b5563;
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+.ev-nav-link:hover {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.07);
+  text-decoration: none;
+}
+.ev-nav-link--active {
+  color: #667eea !important;
+  background: rgba(102, 126, 234, 0.1) !important;
+  font-weight: 600;
+}
+
+/* ---- Auth actions ---- */
+.ev-auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+/* Logout red tint on hover */
+.ev-logout-btn:hover {
+  background: #fef2f2;
+  border-color: #f87171;
+  color: #dc2626;
+}
+
+/* ---- Burger button ---- */
+.ev-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  background: none;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: border-color 0.2s, background 0.2s;
+}
+.ev-burger:hover {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+.ev-burger span {
+  display: block;
+  height: 2px;
+  background: #4b5563;
+  border-radius: 2px;
+  transition: all 0.25s ease;
+  transform-origin: center;
+}
+
+/* Burger → X animation */
+.ev-burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.ev-burger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.ev-burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---- Mobile menu drawer ---- */
+.ev-mobile-menu {
+  display: none;
+  flex-direction: column;
+  padding: 0.75rem 1.5rem 1.25rem;
+  border-top: 1px solid #f3f4f6;
+  background: #fff;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+.ev-mobile-menu.is-open {
+  max-height: 600px;
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+.ev-mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ev-mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #374151;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.ev-mobile-link:hover {
+  background: rgba(102, 126, 234, 0.07);
+  color: #667eea;
+  text-decoration: none;
+}
+
+.ev-mobile-divider {
+  height: 1px;
+  background: #f3f4f6;
+  margin: 12px 0;
+}
+
+.ev-mobile-auth {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ev-mobile-auth-btn {
+  width: 100%;
+  height: 44px;
+  font-size: 0.92rem;
+}
+
+/* ---- Responsive breakpoints ---- */
+@media (max-width: 991px) {
+  .ev-nav,
+  .ev-auth-actions { display: none; }
+  .ev-burger { display: flex; }
+  .ev-mobile-menu { display: flex; }
+}
+
+@media (max-width: 479px) {
+  .ev-header-inner { padding: 0 1rem; }
+  .logo-event, .logo-ura { font-size: 1.2rem; }
+}

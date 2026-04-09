@@ -1,1 +1,147 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   EVENTURA — Global Styles
+============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ---- CSS Custom Properties ---- */
+:root {
+  --ev-primary:       #667eea;
+  --ev-primary-dark:  #764ba2;
+  --ev-accent:        #f093fb;
+  --ev-success:       #4ade80;
+  --ev-error:         #f87171;
+  --ev-text:          #1f2937;
+  --ev-text-muted:    #6b7280;
+  --ev-bg:            #f9fafb;
+  --ev-white:         #ffffff;
+  --ev-border:        #e5e7eb;
+  --ev-shadow-sm:     0 1px 3px rgba(0,0,0,0.08);
+  --ev-shadow-md:     0 4px 16px rgba(0,0,0,0.10);
+  --ev-shadow-lg:     0 10px 40px rgba(0,0,0,0.14);
+  --ev-radius-sm:     8px;
+  --ev-radius-md:     12px;
+  --ev-radius-lg:     20px;
+  --ev-transition:    300ms ease-in-out;
+  --ev-gradient:      linear-gradient(135deg, var(--ev-primary) 0%, var(--ev-primary-dark) 100%);
+}
+
+/* ---- Base Reset ---- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--ev-text);
+  background: var(--ev-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Scroll behaviour ---- */
+html { scroll-behavior: smooth; }
+
+/* ---- Selection colour ---- */
+::selection {
+  background: var(--ev-primary);
+  color: #fff;
+}
+
+/* ---- Focus ring ---- */
+:focus-visible {
+  outline: 2px solid var(--ev-primary);
+  outline-offset: 2px;
+}
+
+/* ---- Utility: gradient text ---- */
+.ev-gradient-text {
+  background: var(--ev-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Utility: page container ---- */
+.ev-page-wrap {
+  min-height: 100vh;
+  background: var(--ev-bg);
+}
+
+/* ---- Buttons ---- */
+.ev-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border-radius: var(--ev-radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--ev-transition);
+  border: 1.5px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.ev-btn-primary {
+  background: var(--ev-gradient);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(102,126,234,0.35);
+}
+.ev-btn-primary:hover {
+  opacity: 0.90;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(102,126,234,0.45);
+  color: #fff;
+  text-decoration: none;
+}
+.ev-btn-ghost {
+  background: transparent;
+  color: var(--ev-text);
+  border-color: transparent;
+}
+.ev-btn-ghost:hover {
+  background: rgba(102,126,234,0.08);
+  color: var(--ev-primary);
+  text-decoration: none;
+}
+.ev-btn-outline {
+  background: transparent;
+  color: var(--ev-primary);
+  border-color: var(--ev-primary);
+}
+.ev-btn-outline:hover {
+  background: var(--ev-primary);
+  color: #fff;
+  text-decoration: none;
+}
+.ev-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ---- Skeleton loader ---- */
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: var(--ev-radius-sm);
+}
+
+/* ---- Alert boxes ---- */
+.ev-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--ev-radius-sm);
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+}
+.ev-alert-error  { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+.ev-alert-success{ background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+.ev-alert-info   { background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; }

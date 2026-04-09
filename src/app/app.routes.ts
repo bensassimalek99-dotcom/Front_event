@@ -8,6 +8,7 @@ import { Error404Component } from './pages/error404/error404.component';
 import { HomeComponent } from './pages/home/home.component';
 import { Home2Component } from './pages/home2/home2.component';
 import { Home3Component } from './pages/home3/home3.component';
+import { LoginComponent } from './pages/login/login.component';
 import { ListingDetailsComponent } from './pages/listing-details/listing-details.component';
 import { ListingDetails2Component } from './pages/listing-details2/listing-details2.component';
 import { ListingDetails3Component } from './pages/listing-details3/listing-details3.component';
@@ -19,12 +20,18 @@ import { ListingLeftSidebarComponent } from './pages/listing-left-sidebar/listin
 import { ListingRightSidebarComponent } from './pages/listing-right-sidebar/listing-right-sidebar.component';
 import { ListingComponent } from './pages/listing/listing.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { EventDetailsComponent } from './pages/event-details/event-details.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'index-2', component: Home2Component },
   { path: 'index-3', component: Home3Component },
-  { path: 'listing', component: ListingComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'listing', component: ListingComponent, canActivate: [authGuard] },
+  { path: 'event/:id', component: EventDetailsComponent, canActivate: [authGuard] },
   { path: 'listing-left-sidebar', component: ListingLeftSidebarComponent },
   { path: 'listing-right-sidebar', component: ListingRightSidebarComponent },
   { path: 'listing-grid-left-sidebar', component: ListingGridLeftSidebarComponent },
@@ -38,8 +45,7 @@ export const routes: Routes = [
   { path: 'blog-details', component: BlogDetailsComponent },
   { path: 'add-listing', component: AddListingComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'register', component: RegisterComponent },
   { path: 'coming-soon', component: ComingSoonComponent },
   { path: 'error-404', component: Error404Component },
-  { path: '**', component: Error404Component }
+  { path: '**', component: Error404Component },
 ];

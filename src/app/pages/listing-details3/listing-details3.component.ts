@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 declare var $: any;
 
 @Component({
-  selector: 'app-listing-details3',
-  standalone: true,
-  imports: [RouterModule, CommonModule],
-  templateUrl: './listing-details3.component.html',
-  styleUrl: './listing-details3.component.css'
+    selector: 'app-listing-details3',
+    imports: [RouterModule, CommonModule],
+    templateUrl: './listing-details3.component.html',
+    styleUrl: './listing-details3.component.css'
 })
 export class ListingDetails3Component implements AfterViewInit {
   ngAfterViewInit() {

@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 declare var $: any;
 
 @Component({
-  selector: 'app-listing-grid-map-left-sidebar',
-  standalone: true,
-  imports: [RouterModule, CommonModule],
-  templateUrl: './listing-grid-map-left-sidebar.component.html',
-  styleUrl: './listing-grid-map-left-sidebar.component.css'
+    selector: 'app-listing-grid-map-left-sidebar',
+    imports: [RouterModule, CommonModule],
+    templateUrl: './listing-grid-map-left-sidebar.component.html',
+    styleUrl: './listing-grid-map-left-sidebar.component.css'
 })
 export class ListingGridMapLeftSidebarComponent implements AfterViewInit {
   ngAfterViewInit() {

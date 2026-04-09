@@ -1,0 +1,336 @@
+/* ============================================================
+   EVENTURA — Listing Page
+============================================================ */
+
+/* ---- Page wrapper ---- */
+.ev-listing-page {
+  min-height: 100vh;
+  background: #f9fafb;
+  font-family: 'Inter', 'Poppins', sans-serif;
+}
+
+/* ---- Hero ---- */
+.ev-listing-hero {
+  position: relative;
+  background: linear-gradient(135deg, #1a0533 0%, #2d0a6e 50%, #4611a7 100%);
+  padding: 3.5rem 0 0;
+  overflow: hidden;
+}
+.ev-listing-hero .container { position: relative; z-index: 1; }
+
+.ev-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 1.25rem;
+}
+.ev-breadcrumb a { color: rgba(255,255,255,0.6); text-decoration: none; }
+.ev-breadcrumb a:hover { color: #fff; }
+.ev-breadcrumb-sep { color: rgba(255,255,255,0.35); }
+
+.ev-listing-title {
+  color: #fff;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+.ev-title-accent { color: #EFBB20; }
+
+.ev-listing-subtitle {
+  color: rgba(255,255,255,0.65);
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+}
+
+.ev-hero-wave {
+  height: 60px;
+  margin-top: 1rem;
+}
+.ev-hero-wave svg { display: block; width: 100%; height: 100%; }
+
+/* ---- Body section ---- */
+.ev-listing-body { padding: 2.5rem 0 4rem; }
+
+/* ---- Map wrapper ---- */
+.ev-map-wrapper {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  border: 1px solid #e5e7eb;
+}
+.ev-map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid #f3f4f6;
+  background: #fafafa;
+}
+.ev-map-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #374151;
+}
+.ev-map-count {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #667eea;
+  background: rgba(102,126,234,0.1);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.ev-map {
+  height: 480px;
+}
+
+/* Custom Leaflet popup */
+:host ::ng-deep .ev-popup .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  border: none;
+  padding: 0;
+}
+:host ::ng-deep .ev-popup .leaflet-popup-content { margin: 16px; }
+:host ::ng-deep .ev-popup .leaflet-popup-tip { background: #fff; }
+
+/* ---- Section header ---- */
+.ev-events-section { }
+.ev-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.ev-section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+.ev-events-badge {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #667eea;
+  background: rgba(102,126,234,0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ---- Events grid ---- */
+.ev-events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* ---- Event card ---- */
+.ev-event-card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  border: 1px solid #f0f0f5;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+.ev-event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(102,126,234,0.18);
+  border-color: rgba(102,126,234,0.2);
+}
+
+/* ---- Card image ---- */
+.ev-card-image {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.ev-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.ev-event-card:hover .ev-card-img { transform: scale(1.05); }
+
+.ev-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- Category badge ---- */
+.ev-card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.92);
+  color: #667eea;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  backdrop-filter: blur(4px);
+}
+
+/* ---- Card body ---- */
+.ev-card-body {
+  padding: 1.1rem 1.2rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.ev-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ev-card-desc {
+  font-size: 0.83rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* ---- Card meta info ---- */
+.ev-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+.ev-card-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ev-card-meta-item svg { flex-shrink: 0; stroke: #9ca3af; }
+
+/* ---- Card button ---- */
+.ev-card-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 9px 0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  font-family: inherit;
+  box-shadow: 0 3px 10px rgba(102,126,234,0.3);
+  margin-top: auto;
+}
+.ev-card-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(102,126,234,0.4);
+}
+
+/* ---- Skeleton card ---- */
+.ev-event-card--skeleton {
+  cursor: default;
+  pointer-events: none;
+}
+.ev-card-image-placeholder {
+  height: 180px;
+  width: 100%;
+}
+
+/* ---- State cards (empty / error) ---- */
+.ev-state-card {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px dashed #e5e7eb;
+  margin-bottom: 2rem;
+}
+.ev-state-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.ev-state-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+.ev-state-card p {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+.ev-state-error { border-color: #fecaca; }
+.ev-state-error h3 { color: #b91c1c; }
+
+.ev-btn-retry {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: #fff;
+  border: 1.5px solid #667eea;
+  color: #667eea;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-family: inherit;
+}
+.ev-btn-retry:hover {
+  background: #667eea;
+  color: #fff;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1023px) {
+  .ev-events-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 639px) {
+  .ev-events-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .ev-map { height: 320px; }
+  .ev-listing-hero { padding: 2rem 0 0; }
+  .ev-section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+}

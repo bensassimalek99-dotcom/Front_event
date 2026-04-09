@@ -66,6 +66,7 @@
               "src/assets/plugins/magnific-popup/magnific-popup.css",
               "src/assets/plugins/bootstrap-select/bootstrap-select.min.css",
               "src/assets/plugins/rangeslider/rangeslider.css",
+              "node_modules/leaflet/dist/leaflet.css",
               "src/assets/css/plugins.css",
               "src/assets/css/style.css",
               "src/assets/css/templete.css",
@@ -93,6 +94,11 @@
           },
           "configurations": {
             "production": {
+              "optimization": {
+                "styles": {
+                  "inlineCritical": false
+                }
+              },
               "budgets": [
                 {
                   "type": "initial",
@@ -117,6 +123,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "bizmap-angular:build:production"

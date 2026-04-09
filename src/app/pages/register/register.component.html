@@ -1,279 +1,216 @@
-<div class="page-wraper">
-  <div class="auth-page">
+<div class="auth-page">
+  <!-- Animated background blobs -->
+  <div class="auth-blob auth-blob-1"></div>
+  <div class="auth-blob auth-blob-2"></div>
+  <div class="auth-blob auth-blob-3"></div>
 
-    <div class="auth-blob auth-blob-1"></div>
-    <div class="auth-blob auth-blob-2"></div>
-    <div class="auth-blob auth-blob-3"></div>
+  <div class="container py-4" style="position:relative; z-index:1;">
+    <div class="row align-items-center" style="min-height:100vh;">
 
-    <div class="container-fluid h-100">
-      <div class="row h-100 align-items-center justify-content-center">
+      <!-- ── Left marketing panel (desktop only) ── -->
+      <div class="col-lg-6 d-none d-lg-flex left-panel">
+        <div class="left-panel-inner">
 
-        <!-- ===== LEFT PANEL ===== -->
-        <div class="col-xl-5 col-lg-6 d-none d-lg-flex align-items-center left-panel">
-          <div class="left-panel-inner">
+          <div class="brand-badge">
+            <i class="fa fa-map-marker"></i>
+            Eventura — Cartographie d'Événements
+          </div>
 
-            <div class="brand-badge">
-              <i class="fa fa-calendar-check-o"></i>
-              <span>EventMap &mdash; Plateforme d'Événements</span>
+          <h1 class="left-heading">
+            Rejoignez la<br>
+            <span class="accent-text">communauté</span><br>
+            des événements
+          </h1>
+
+          <p class="left-sub">
+            Créez votre compte et découvrez des milliers d'événements
+            près de chez vous sur une carte interactive.
+          </p>
+
+          <!-- Stats -->
+          <div class="stats-row">
+            <div class="stat-item">
+              <span class="stat-number">2.5k+</span>
+              <span class="stat-label">Événements</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">12k+</span>
+              <span class="stat-label">Utilisateurs</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">Villes</span>
+            </div>
+          </div>
+
+          <!-- Features -->
+          <ul class="feature-list">
+            <li>
+              <div class="feature-icon"><i class="fa fa-map"></i></div>
+              <div class="feature-text">
+                <strong>Carte Interactive</strong>
+                <span>Visualisez les événements sur la carte</span>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon"><i class="fa fa-bell"></i></div>
+              <div class="feature-text">
+                <strong>Notifications</strong>
+                <span>Ne ratez plus aucun événement</span>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon"><i class="fa fa-users"></i></div>
+              <div class="feature-text">
+                <strong>Communauté</strong>
+                <span>Connectez-vous avec d'autres participants</span>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+
+      <!-- ── Auth card ── -->
+      <div class="col-lg-5 offset-lg-1 col-md-8 offset-md-2 col-12">
+        <div class="auth-card">
+          <div class="auth-card-accent"></div>
+
+          <!-- Logo -->
+          <div class="auth-logo">
+            <span class="auth-logo-text">
+              <span style="color:#667eea;">Event</span><span style="color:#333;">ura</span>
+            </span>
+          </div>
+
+          <!-- Tabs -->
+          <ul class="auth-tabs nav" style="list-style:none; padding-left:0;">
+            <li class="nav-item">
+              <a class="auth-tab" routerLink="/login">
+                <i class="fa fa-sign-in"></i>Connexion
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="auth-tab active" routerLink="/register">
+                <i class="fa fa-user-plus"></i>Inscription
+              </a>
+            </li>
+          </ul>
+
+          <!-- Form body -->
+          <div class="auth-tab-content">
+
+            <div class="form-intro">
+              <h5>Créer un compte</h5>
+              <p>Remplissez le formulaire pour commencer</p>
             </div>
 
-            <h1 class="left-heading">
-              Découvrez,<br>
-              <span class="accent-text">Créez</span> &amp; Partagez<br>
-              des Événements
-            </h1>
-            <p class="left-sub">
-              La plateforme de référence pour trouver et publier
-              des événements près de chez vous.
+            <!-- Error / Success messages -->
+            <div *ngIf="errorMessage" class="auth-alert auth-alert-error">
+              <i class="fa fa-exclamation-circle"></i>{{ errorMessage }}
+            </div>
+            <div *ngIf="successMessage" class="auth-alert auth-alert-success">
+              <i class="fa fa-check-circle"></i>{{ successMessage }}
+            </div>
+
+            <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
+
+              <!-- Nom + Prénom side by side -->
+              <div class="row no-gutters" style="margin: 0 -5px;">
+                <div class="col-6" style="padding: 0 5px;">
+                  <div class="auth-input-group">
+                    <i class="fa fa-user input-icon"></i>
+                    <input
+                      type="text" class="auth-input" name="nom"
+                      [(ngModel)]="registerData.nom" required #nom="ngModel"
+                      placeholder="Nom" aria-label="Nom" autocomplete="family-name"
+                    >
+                  </div>
+                  <div *ngIf="nom.invalid && nom.touched" class="auth-field-error">Requis</div>
+                </div>
+                <div class="col-6" style="padding: 0 5px;">
+                  <div class="auth-input-group">
+                    <i class="fa fa-user input-icon"></i>
+                    <input
+                      type="text" class="auth-input" name="prenom"
+                      [(ngModel)]="registerData.prenom" required #prenom="ngModel"
+                      placeholder="Prénom" aria-label="Prénom" autocomplete="given-name"
+                    >
+                  </div>
+                  <div *ngIf="prenom.invalid && prenom.touched" class="auth-field-error">Requis</div>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="auth-input-group">
+                <i class="fa fa-envelope input-icon"></i>
+                <input
+                  type="email" class="auth-input" name="email"
+                  [(ngModel)]="registerData.email" required email #email="ngModel"
+                  placeholder="votre@email.com" aria-label="Email" autocomplete="email"
+                >
+              </div>
+              <div *ngIf="email.invalid && email.touched" class="auth-field-error">
+                Adresse email valide requise
+              </div>
+
+              <!-- Password -->
+              <div class="auth-input-group">
+                <i class="fa fa-lock input-icon"></i>
+                <input
+                  [type]="showPassword ? 'text' : 'password'" class="auth-input"
+                  name="password" [(ngModel)]="registerData.password"
+                  required minlength="6" #password="ngModel"
+                  placeholder="Mot de passe (min 6 car.)" aria-label="Mot de passe"
+                  autocomplete="new-password"
+                >
+                <button
+                  type="button" class="input-eye-btn"
+                  (click)="showPassword = !showPassword"
+                  [attr.aria-label]="showPassword ? 'Masquer' : 'Afficher'"
+                >
+                  <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </button>
+              </div>
+              <div *ngIf="password.invalid && password.touched" class="auth-field-error">
+                Minimum 6 caractères
+              </div>
+
+              <!-- Adresse -->
+              <div class="auth-input-group">
+                <i class="fa fa-map-marker input-icon"></i>
+                <input
+                  type="text" class="auth-input" name="adresse"
+                  [(ngModel)]="registerData.adresse" required #adresse="ngModel"
+                  placeholder="Votre adresse" aria-label="Adresse" autocomplete="street-address"
+                >
+              </div>
+              <div *ngIf="adresse.invalid && adresse.touched" class="auth-field-error">
+                Adresse requise
+              </div>
+
+              <button
+                type="submit" class="auth-btn-primary"
+                [disabled]="registerForm.invalid || loading"
+              >
+                <i *ngIf="!loading" class="fa fa-user-plus"></i>
+                <span *ngIf="loading" class="auth-spinner"></span>
+                {{ loading ? 'Inscription...' : 'Créer mon compte' }}
+              </button>
+
+            </form>
+
+            <p class="auth-switch-text">
+              Déjà un compte ?
+              <a routerLink="/login" class="auth-link-bold">Se connecter</a>
             </p>
 
-            <div class="stats-row">
-              <div class="stat-item">
-                <span class="stat-number">12k+</span>
-                <span class="stat-label">Événements</span>
-              </div>
-              <div class="stat-divider"></div>
-              <div class="stat-item">
-                <span class="stat-number">48k+</span>
-                <span class="stat-label">Membres</span>
-              </div>
-              <div class="stat-divider"></div>
-              <div class="stat-item">
-                <span class="stat-number">200+</span>
-                <span class="stat-label">Villes</span>
-              </div>
-            </div>
-
-            <ul class="feature-list">
-              <li>
-                <div class="feature-icon"><i class="fa fa-calendar-plus-o"></i></div>
-                <div class="feature-text">
-                  <strong>Publiez gratuitement</strong>
-                  <span>Concerts, conférences, ateliers, festivals…</span>
-                </div>
-              </li>
-              <li>
-                <div class="feature-icon"><i class="fa fa-search"></i></div>
-                <div class="feature-text">
-                  <strong>Trouvez et filtrez</strong>
-                  <span>Par catégorie, ville, date ou prix</span>
-                </div>
-              </li>
-              <li>
-                <div class="feature-icon"><i class="fa fa-bell"></i></div>
-                <div class="feature-text">
-                  <strong>Alertes personnalisées</strong>
-                  <span>Ne manquez plus aucun événement qui vous correspond</span>
-                </div>
-              </li>
-            </ul>
-
-            <div class="social-proof">
-              <div class="avatar-stack">
-                <img src="assets/images/testimonials/pic1.jpg" alt=""/>
-                <img src="assets/images/testimonials/pic2.jpg" alt=""/>
-                <img src="assets/images/testimonials/pic3.jpg" alt=""/>
-                <span class="avatar-more">+45k</span>
-              </div>
-              <span class="social-proof-text">participants actifs cette semaine</span>
-            </div>
-
           </div>
         </div>
-
-        <!-- ===== RIGHT PANEL : FORM CARD ===== -->
-        <div class="col-xl-4 col-lg-5 col-md-8 col-sm-11 col-12 py-4">
-          <div class="auth-card">
-
-            <div class="auth-card-accent"></div>
-
-            <div class="auth-logo">
-              <a routerLink="/">
-                <img src="assets/images/logo-black.png" alt="EventMap"/>
-              </a>
-            </div>
-
-            <!-- Tab switcher : <a href> obligatoire pour Bootstrap 4 -->
-            <ul class="nav auth-tabs" id="authTabs" role="tablist">
-              <li class="nav-item">
-                <a class="auth-tab nav-link active" id="login-tab"
-                   data-toggle="tab" href="#login" role="tab">
-                  <i class="fa fa-sign-in"></i> Connexion
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="auth-tab nav-link" id="register-tab"
-                   data-toggle="tab" href="#register" role="tab">
-                  <i class="fa fa-user-plus"></i> Inscription
-                </a>
-              </li>
-            </ul>
-
-            <div class="tab-content auth-tab-content">
-
-              <!-- ===== LOGIN ===== -->
-              <div id="login" class="tab-pane active show" role="tabpanel">
-                <div class="form-intro">
-                  <h5>Bon retour parmi nous !</h5>
-                  <p>Connectez-vous pour accéder à vos événements.</p>
-                </div>
-                <form class="dlab-form">
-                  <div class="auth-input-group">
-                    <i class="fa fa-envelope-o input-icon"></i>
-                    <input name="email" required class="auth-input"
-                      placeholder="Adresse e-mail ou nom d'utilisateur"
-                      type="text" autocomplete="username"/>
-                  </div>
-                  <div class="auth-input-group">
-                    <i class="fa fa-lock input-icon"></i>
-                    <input name="password" required class="auth-input"
-                      placeholder="Mot de passe" type="password"
-                      autocomplete="current-password"/>
-                    <button type="button" class="input-eye-btn">
-                      <i class="fa fa-eye-slash"></i>
-                    </button>
-                  </div>
-                  <div class="auth-options">
-                    <label class="custom-check">
-                      <input type="checkbox" id="check1"/>
-                      <span class="checkmark"></span>
-                      Se souvenir de moi
-                    </label>
-                    <a data-toggle="tab" href="#forgot-password" class="auth-link-sm">
-                      Mot de passe oublié ?
-                    </a>
-                  </div>
-                  <button type="submit" class="auth-btn-primary">
-                    <i class="fa fa-sign-in"></i> Se connecter
-                  </button>
-                  <p class="auth-switch-text">
-                    Pas encore de compte ?
-                    <a data-toggle="tab" href="#register" class="auth-link-bold">Créer un compte</a>
-                  </p>
-                </form>
-              </div>
-
-              <!-- ===== FORGOT PASSWORD ===== -->
-              <div id="forgot-password" class="tab-pane fade" role="tabpanel">
-                <div class="form-intro">
-                  <h5>Mot de passe oublié ?</h5>
-                  <p>Saisissez votre e-mail pour recevoir un lien de réinitialisation.</p>
-                </div>
-                <form class="dlab-form">
-					
-                  <div class="auth-input-group">
-                    <i class="fa fa-envelope-o input-icon"></i>
-                    <input name="email" required class="auth-input"
-                      placeholder="Votre adresse e-mail" type="email"
-                      autocomplete="email"/>
-                  </div>
-                  <button type="submit" class="auth-btn-primary">
-                    <i class="fa fa-paper-plane-o"></i> Envoyer le lien
-                  </button>
-                  <p class="auth-switch-text mt-3">
-                    <a data-toggle="tab" href="#login" class="auth-link-bold">
-                      <i class="fa fa-arrow-left"></i> Retour à la connexion
-                    </a>
-                    &nbsp;|&nbsp;
-                    <a data-toggle="tab" href="#register" class="auth-link-bold">S'inscrire</a>
-                  </p>
-                </form>
-              </div>
-
-              <!-- ===== REGISTER ===== -->
-              <div id="register" class="tab-pane fade" role="tabpanel">
-                <div class="form-intro">
-                  <h5>Créer un compte</h5>
-                  <p>Gratuit — publiez votre premier événement dès aujourd'hui.</p>
-                </div>
-                <form class="dlab-form">
-                  <div class="row no-gutters">
-                    <div class="col-6" style="padding-right:5px;">
-                      <div class="auth-input-group">
-                        <i class="fa fa-user-o input-icon"></i>
-                        <input name="firstName" required class="auth-input"
-                          placeholder="Prénom" type="text" autocomplete="given-name"/>
-                      </div>
-                    </div>
-                    <div class="col-6" style="padding-left:5px;">
-                      <div class="auth-input-group">
-                        <input name="lastName" required class="auth-input"
-                          placeholder="Nom" type="text" autocomplete="family-name"
-                          style="padding-left:14px;"/>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="auth-input-group">
-                    <i class="fa fa-envelope-o input-icon"></i>
-                    <input name="email" required class="auth-input"
-                      placeholder="Adresse e-mail" type="email" autocomplete="email"/>
-                  </div>
-                  <div class="auth-input-group">
-                    <i class="fa fa-map-marker input-icon"></i>
-                    <input name="city" required class="auth-input"
-                      placeholder="Ville" type="text" autocomplete="address-level2"/>
-                  </div>
-                  <div class="row no-gutters">
-                    <div class="col-6" style="padding-right:5px;">
-                      <div class="auth-input-group">
-                        <i class="fa fa-lock input-icon"></i>
-                        <input name="password" required class="auth-input"
-                          placeholder="Mot de passe" type="password"
-                          autocomplete="new-password"/>
-                      </div>
-                    </div>
-                    <div class="col-6" style="padding-left:5px;">
-                      <div class="auth-input-group">
-                        <i class="fa fa-lock input-icon"></i>
-                        <input name="confirmPassword" required class="auth-input"
-                          placeholder="Confirmer" type="password"
-                          autocomplete="new-password"/>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="role-selector">
-                    <label class="role-selector-label">Je souhaite :</label>
-                    <div class="role-options">
-                      <input type="radio" id="role-visitor" name="role"
-                        value="visitor" class="role-radio" checked/>
-                      <label for="role-visitor" class="role-option">
-                        <i class="fa fa-ticket"></i>
-                        <strong>Participer</strong>
-                        <span>Trouver des événements</span>
-                      </label>
-                      <input type="radio" id="role-organizer" name="role"
-                        value="organizer" class="role-radio"/>
-                      <label for="role-organizer" class="role-option">
-                        <i class="fa fa-calendar-plus-o"></i>
-                        <strong>Organiser</strong>
-                        <span>Publier mes événements</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <label class="custom-check mt-2 mb-3">
-                    <input type="checkbox" id="privacy-policy"/>
-                    <span class="checkmark"></span>
-                    J'accepte les <a href="#" class="auth-link-bold">CGU</a>
-                    et la <a href="#" class="auth-link-bold">Politique de confidentialité</a>
-                  </label>
-
-                  <button type="submit" class="auth-btn-primary">
-                    <i class="fa fa-user-plus"></i> Créer mon compte
-                  </button>
-                  <p class="auth-switch-text">
-                    Déjà un compte ?
-                    <a data-toggle="tab" href="#login" class="auth-link-bold">Se connecter</a>
-                  </p>
-                </form>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
       </div>
+
     </div>
   </div>
 </div>

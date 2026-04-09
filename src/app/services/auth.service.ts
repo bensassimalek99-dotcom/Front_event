@@ -8,7 +8,7 @@ import { LoginRequest, RegisterRequest, AuthResponse } from '../models/auth';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080/api/auth';
+private apiUrl = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient) {}
 
@@ -32,7 +32,7 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
+  isAuthenticated(): boolean {
+  return !!this.getToken();
+}
 }
