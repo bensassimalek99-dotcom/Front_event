@@ -43,7 +43,7 @@
 
     <!-- Hero banner -->
     <div class="ev-details-hero"
-         [style.background-image]="event.imageUrl ? 'url(' + event.imageUrl + ')' : 'none'">
+         [style.background-image]="event.imagePath ? 'url(' + event.imagePath + ')' : 'none'">
       <div class="ev-details-hero-overlay"></div>
       <div class="container ev-details-hero-content">
         <!-- Breadcrumb -->
@@ -52,32 +52,29 @@
           <span class="ev-bc-sep">›</span>
           <a routerLink="/listing">Événements</a>
           <span class="ev-bc-sep">›</span>
-          <span>{{ event.title }}</span>
+          <span>{{ event.titre }}</span>
         </nav>
 
-        <!-- Badge -->
-        <span *ngIf="event.category" class="ev-hero-badge">{{ event.category }}</span>
-
         <!-- Title -->
-        <h1 class="ev-details-title">{{ event.title }}</h1>
+        <h1 class="ev-details-title">{{ event.titre }}</h1>
 
         <!-- Quick meta -->
         <div class="ev-hero-meta">
-          <span *ngIf="event.date" class="ev-hero-meta-item">
+          <span *ngIf="event.dateDebut" class="ev-hero-meta-item">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="4" width="18" height="18" rx="2"/>
               <line x1="16" y1="2" x2="16" y2="6"/>
               <line x1="8" y1="2" x2="8" y2="6"/>
               <line x1="3" y1="10" x2="21" y2="10"/>
             </svg>
-            {{ formatDate(event.date) }}
+            {{ formatDate(event.dateDebut) }}
           </span>
-          <span *ngIf="event.location" class="ev-hero-meta-item">
+          <span *ngIf="event.lieu" class="ev-hero-meta-item">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
               <circle cx="12" cy="10" r="3"/>
             </svg>
-            {{ event.location }}
+            {{ event.lieu }}
           </span>
         </div>
       </div>
@@ -123,7 +120,7 @@
               Informations
             </div>
             <div class="ev-info-list">
-              <div *ngIf="event.date" class="ev-info-item">
+              <div *ngIf="event.dateDebut" class="ev-info-item">
                 <div class="ev-info-icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="4" width="18" height="18" rx="2"/>
@@ -134,11 +131,11 @@
                 </div>
                 <div class="ev-info-text">
                   <span class="ev-info-label">Date &amp; Heure</span>
-                  <span class="ev-info-value">{{ formatDate(event.date) }}</span>
+                  <span class="ev-info-value">{{ formatDate(event.dateDebut) }}</span>
                 </div>
               </div>
 
-              <div *ngIf="event.location" class="ev-info-item">
+              <div *ngIf="event.lieu" class="ev-info-item">
                 <div class="ev-info-icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
@@ -147,20 +144,7 @@
                 </div>
                 <div class="ev-info-text">
                   <span class="ev-info-label">Lieu</span>
-                  <span class="ev-info-value">{{ event.location }}</span>
-                </div>
-              </div>
-
-              <div *ngIf="event.category" class="ev-info-item">
-                <div class="ev-info-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
-                    <line x1="7" y1="7" x2="7.01" y2="7"/>
-                  </svg>
-                </div>
-                <div class="ev-info-text">
-                  <span class="ev-info-label">Catégorie</span>
-                  <span class="ev-info-value ev-category-pill">{{ event.category }}</span>
+                  <span class="ev-info-value">{{ event.lieu }}</span>
                 </div>
               </div>
 
@@ -205,12 +189,12 @@
               Localisation
             </div>
             <div id="mini-map" class="ev-mini-map"></div>
-            <div class="ev-mini-map-label" *ngIf="event.location">
+            <div class="ev-mini-map-label" *ngIf="event.lieu">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
                 <circle cx="12" cy="10" r="3"/>
               </svg>
-              {{ event.location }}
+              {{ event.lieu }}
             </div>
           </div>
 

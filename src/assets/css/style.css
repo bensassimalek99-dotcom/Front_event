@@ -4386,7 +4386,6 @@ blockquote:before {
 .owl-theme .owl-dots .owl-dot {
     display: inline-block;
     zoom: 1;
-    *display: inline;
 }
 .owl-theme .owl-dots .owl-dot span {
     width: 10px;
@@ -5470,7 +5469,7 @@ ol.comment-list li.comment .comment-respond .comment-form p {
     border: 1px solid #e1e6eb;
     text-align: center;
     border-radius: 4px 0 0 4px;
-    -webkit- border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
 }
 .comments-area p.comment-form-author:before {
     content: "\e602";

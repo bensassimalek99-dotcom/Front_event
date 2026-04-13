@@ -1,13 +1,14 @@
 export interface Event {
-  id: number;
-  title: string;
+  id?: number;
+  titre: string;
   description: string;
-  date: string;
-  location: string;
+  dateDebut: string;
+  dateFin: string;
+  lieu: string;
   latitude: number;
   longitude: number;
-  imageUrl?: string;
-  category?: string;
+  nbPlaces: number;
+  imagePath?: string;
 }
 
 export interface EventRequest {

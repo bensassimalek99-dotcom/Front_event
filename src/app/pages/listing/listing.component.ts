@@ -28,11 +28,23 @@ export class ListingComponent implements OnInit, AfterViewInit, OnDestroy {
       next: (data) => {
         this.events = data;
         this.loading = false;
-        if (this.mapReady) this.addMarkers();
+        if (this.mapReady) this.addMarkersToMap(data);
       },
       error: () => {
         this.errorMessage = 'Impossible de charger les événements. Vérifiez votre connexion.';
         this.loading = false;
+      }
+    });
+  }
+
+  loadEvents() {
+    this.eventService.getAllEvents().subscribe({
+      next: (events) => {
+        this.events = events;
+        this.addMarkersToMap(events);
+      },
+      error: (err) => {
+        console.error('Erreur:', err);
       }
     });
   }
@@ -59,7 +71,7 @@ export class ListingComponent implements OnInit, AfterViewInit, OnDestroy {
     }).addTo(this.map);
 
     this.mapReady = true;
-    if (this.events.length > 0) this.addMarkers();
+    if (this.events.length > 0) this.addMarkersToMap(this.events);
   }
 
   private createMarkerIcon() {
@@ -89,55 +101,58 @@ export class ListingComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private addMarkers() {
-    if (!this.map) return;
-
-    // Clear existing markers
-    this.map.eachLayer(layer => {
-      if (layer instanceof L.Marker) this.map!.removeLayer(layer);
-    });
-
-    const bounds: L.LatLng[] = [];
-
-    this.events.forEach(event => {
-      if (event.latitude && event.longitude) {
-        const lat = event.latitude;
-        const lng = event.longitude;
-        const dateStr = event.date
-          ? new Date(event.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })
-          : '';
-
-        const popup = `
-          <div style="min-width:200px; font-family:Inter,sans-serif;">
-            <div style="font-weight:700; font-size:0.92rem; color:#1f2937; margin-bottom:6px; line-height:1.3;">
-              ${this.escapeHtml(event.title)}
-            </div>
-            ${dateStr ? `<div style="font-size:0.8rem; color:#6b7280; margin-bottom:4px;">📅 ${dateStr}</div>` : ''}
-            ${event.location ? `<div style="font-size:0.8rem; color:#6b7280; margin-bottom:10px;">📍 ${this.escapeHtml(event.location)}</div>` : ''}
-            <a href="/event/${event.id}"
-               style="display:inline-block; background:linear-gradient(135deg,#667eea,#764ba2);
-                      color:#fff; padding:6px 14px; border-radius:6px; font-size:0.8rem;
-                      font-weight:600; text-decoration:none;">
-              Voir les détails →
-            </a>
-          </div>`;
-
-        L.marker([lat, lng], { icon: this.createMarkerIcon() })
-          .addTo(this.map!)
-          .bindPopup(popup, { maxWidth: 260, className: 'ev-popup' });
-
-        bounds.push(L.latLng(lat, lng));
-      }
-    });
-
-    if (bounds.length > 1) {
-      this.map.fitBounds(L.latLngBounds(bounds), { padding: [40, 40] });
-    }
-  }
-
   private escapeHtml(str: string): string {
     return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
+
+   addMarkersToMap(events: Event[]) {
+  if (!this.map) return;
+
+  // Supprime les anciens marqueurs
+  this.map.eachLayer(layer => {
+    if (layer instanceof L.Marker) this.map!.removeLayer(layer);
+  });
+
+  const bounds: L.LatLng[] = [];
+
+  events.forEach(event => {
+    if (event.latitude && event.longitude) {
+      // ✅ Utilise les BONS noms de propriétés
+      const dateStr = event.dateDebut
+        ? new Date(event.dateDebut).toLocaleDateString('fr-FR', { 
+            day: '2-digit', 
+            month: 'short', 
+            year: 'numeric' 
+          })
+        : '';
+
+      const popup = `
+        <div style="min-width:200px; font-family:Inter,sans-serif;">
+          <div style="font-weight:700; font-size:0.92rem; color:#1f2937; margin-bottom:6px; line-height:1.3;">
+            ${this.escapeHtml(event.titre)}
+          </div>
+          ${dateStr ? `<div style="font-size:0.8rem; color:#6b7280; margin-bottom:4px;">📅 ${dateStr}</div>` : ''}
+          ${event.lieu ? `<div style="font-size:0.8rem; color:#6b7280; margin-bottom:10px;">📍 ${this.escapeHtml(event.lieu)}</div>` : ''}
+          <a href="/event/${event.id}"
+             style="display:inline-block; background:linear-gradient(135deg,#667eea,#764ba2);
+                    color:#fff; padding:6px 14px; border-radius:6px; font-size:0.8rem;
+                    font-weight:600; text-decoration:none;">
+            Voir les détails →
+          </a>
+        </div>`;
+
+      L.marker([event.latitude, event.longitude], { icon: this.createMarkerIcon() })
+        .addTo(this.map!)
+        .bindPopup(popup, { maxWidth: 260, className: 'ev-popup' });
+
+      bounds.push(L.latLng(event.latitude, event.longitude));
+    }
+  });
+
+  if (bounds.length > 1) {
+    this.map.fitBounds(L.latLngBounds(bounds), { padding: [40, 40] });
+  }
+}
 
   goToDetails(id: number) {
     this.router.navigate(['/event', id]);
