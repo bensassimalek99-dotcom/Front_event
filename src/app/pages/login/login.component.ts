@@ -22,22 +22,33 @@ export class LoginComponent {
   ) {}
 
   onSubmit() {
-    this.loading = true;
-    this.errorMessage = '';
+  this.loading = true;
+  this.errorMessage = '';
 
-    this.authService.login(this.loginData).subscribe({
-      next: (response) => {
-        this.authService.saveToken(response.token);
-        this.router.navigate(['/listing']);
-      },
-      error: (error) => {
-        this.loading = false;
-        this.errorMessage = 'Email ou mot de passe incorrect';
-        console.error('Erreur login:', error);
-      },
-      complete: () => {
-        this.loading = false;
-      }
-    });
-  }
+  this.authService.login(this.loginData).subscribe({
+    next: (response) => {
+      // Le token est déjà sauvegardé automatiquement par tap() dans AuthService
+      this.loading = false;
+      this.router.navigate(['/']);
+    },
+    error: (error) => {
+      this.loading = false;
+      this.errorMessage = 'Email ou mot de passe incorrect';
+      console.error('Erreur login:', error);
+    }
+  });
+}
+onLogin() {
+  this.authService.login(this.loginData).subscribe({
+    next: (response) => {
+      // Le token est automatiquement sauvegardé par tap() dans AuthService
+      alert('Connexion réussie !');
+      this.router.navigate(['/']);
+    },
+    error: (error) => {
+      console.error('Erreur de connexion:', error);
+      alert('Email ou mot de passe incorrect');
+    }
+  });
+}
 }

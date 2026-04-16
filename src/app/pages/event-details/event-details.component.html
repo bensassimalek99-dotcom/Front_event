@@ -1,228 +1,117 @@
-<div class="ev-details-page">
+<div class="event-details-page">
 
-  <!-- ── Loading state ── -->
-  <div *ngIf="loading" class="ev-details-loading">
-    <div class="ev-details-hero-skeleton skeleton"></div>
-    <div class="container ev-details-body">
-      <div class="ev-details-grid">
-        <div class="ev-details-main">
-          <div class="skeleton" style="height:32px; width:70%; margin-bottom:16px;"></div>
-          <div class="skeleton" style="height:16px; width:100%; margin-bottom:8px;"></div>
-          <div class="skeleton" style="height:16px; width:90%; margin-bottom:8px;"></div>
-          <div class="skeleton" style="height:16px; width:80%;"></div>
-        </div>
-        <div class="ev-details-sidebar">
-          <div class="skeleton" style="height:220px; border-radius:14px;"></div>
-        </div>
-      </div>
-    </div>
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Chargement de l'événement...</p>
   </div>
 
-  <!-- ── Error state ── -->
-  <div *ngIf="!loading && errorMessage" class="container" style="padding: 4rem 15px;">
-    <div class="ev-state-card ev-state-error">
-      <div class="ev-state-icon">
-        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="1.5">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
-        </svg>
-      </div>
-      <h3>Événement introuvable</h3>
-      <p>{{ errorMessage }}</p>
-      <button class="ev-btn-back" (click)="goBack()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
-        </svg>
-        Retour aux événements
-      </button>
-    </div>
+  <!-- Error -->
+  <div *ngIf="!loading && errorMessage" class="error-state">
+    <div class="error-icon">❌</div>
+    <h2>Erreur</h2>
+    <p>{{ errorMessage }}</p>
+    <button (click)="goBack()" class="btn-back">
+      ← Retour à la liste
+    </button>
   </div>
 
-  <!-- ── Event content ── -->
-  <ng-container *ngIf="!loading && event">
+  <!-- Event Details -->
+  <div *ngIf="!loading && !errorMessage && event" class="event-details">
+    
+    <!-- Header avec image -->
+    <div class="event-header" 
+         [style.background-image]="event.imagePath ? 'url(' + event.imagePath + ')' : 'none'"
+         [style.background-color]="!event.imagePath ? '#667eea' : 'transparent'">
+      <div class="event-header-overlay">
+        <button (click)="goBack()" class="btn-back-floating">
+          ← Retour
+        </button>
+        <h1>{{ event.titre }}</h1>
+      </div>
+    </div>
 
-    <!-- Hero banner -->
-    <div class="ev-details-hero"
-         [style.background-image]="event.imagePath ? 'url(' + event.imagePath + ')' : 'none'">
-      <div class="ev-details-hero-overlay"></div>
-      <div class="container ev-details-hero-content">
-        <!-- Breadcrumb -->
-        <nav class="ev-breadcrumb" aria-label="breadcrumb">
-          <a routerLink="/">Accueil</a>
-          <span class="ev-bc-sep">›</span>
-          <a routerLink="/listing">Événements</a>
-          <span class="ev-bc-sep">›</span>
-          <span>{{ event.titre }}</span>
-        </nav>
+    <!-- Contenu principal -->
+    <div class="event-content">
+      <div class="container">
+        <div class="content-grid">
+          
+          <!-- Colonne principale -->
+          <div class="main-column">
+            
+            <!-- Description -->
+            <section class="info-section">
+              <h2>📝 Description</h2>
+              <p>{{ event.description }}</p>
+            </section>
 
-        <!-- Title -->
-        <h1 class="ev-details-title">{{ event.titre }}</h1>
+            <!-- Informations -->
+            <section class="info-section">
+              <h2>ℹ️ Informations</h2>
+              <div class="info-grid">
+                
+                <div class="info-item">
+                  <span class="info-label">📅 Date de début</span>
+                  <span class="info-value">{{ formatDate(event.dateDebut) }}</span>
+                </div>
 
-        <!-- Quick meta -->
-        <div class="ev-hero-meta">
-          <span *ngIf="event.dateDebut" class="ev-hero-meta-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="4" width="18" height="18" rx="2"/>
-              <line x1="16" y1="2" x2="16" y2="6"/>
-              <line x1="8" y1="2" x2="8" y2="6"/>
-              <line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>
-            {{ formatDate(event.dateDebut) }}
-          </span>
-          <span *ngIf="event.lieu" class="ev-hero-meta-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            {{ event.lieu }}
-          </span>
+                <div class="info-item">
+                  <span class="info-label">🏁 Date de fin</span>
+                  <span class="info-value">{{ formatDate(event.dateFin) }}</span>
+                </div>
+
+                <div class="info-item">
+                  <span class="info-label">📍 Lieu</span>
+                  <span class="info-value">{{ event.lieu }}</span>
+                </div>
+
+                <div class="info-item">
+                  <span class="info-label">👥 Places disponibles</span>
+                  <span class="info-value">{{ event.nbPlaces }}</span>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- Carte -->
+            <section class="info-section">
+              <h2>🗺️ Localisation</h2>
+              <div id="detail-map" class="detail-map"></div>
+            </section>
+
+          </div>
+
+          <!-- Colonne latérale (sidebar) -->
+          <div class="sidebar-column">
+            
+            <!-- Card d'inscription -->
+            <div class="register-card">
+              <h3>Participer à cet événement</h3>
+              <div class="register-info">
+                <div class="info-row">
+                  <span>📅</span>
+                  <span>{{ formatDate(event.dateDebut) }}</span>
+                </div>
+                <div class="info-row">
+                  <span>📍</span>
+                  <span>{{ event.lieu }}</span>
+                </div>
+                <div class="info-row">
+                  <span>👥</span>
+                  <span>{{ event.nbPlaces }} places disponibles</span>
+                </div>
+              </div>
+              <button (click)="register()" class="btn-register">
+                S'inscrire maintenant
+              </button>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </div>
 
-    <!-- ── Main content ── -->
-    <div class="container ev-details-body">
-      <div class="ev-details-grid">
+  </div>
 
-        <!-- Main column -->
-        <div class="ev-details-main">
-
-          <!-- Back button -->
-          <button class="ev-btn-back" (click)="goBack()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
-            </svg>
-            Retour aux événements
-          </button>
-
-          <!-- Description card -->
-          <div class="ev-card" *ngIf="event.description">
-            <div class="ev-card-section-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2">
-                <line x1="17" y1="10" x2="3" y2="10"/>
-                <line x1="21" y1="6" x2="3" y2="6"/>
-                <line x1="21" y1="14" x2="3" y2="14"/>
-                <line x1="17" y1="18" x2="3" y2="18"/>
-              </svg>
-              Description
-            </div>
-            <p class="ev-description">{{ event.description }}</p>
-          </div>
-
-          <!-- Details card -->
-          <div class="ev-card">
-            <div class="ev-card-section-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="12" y1="8" x2="12" y2="12"/>
-                <line x1="12" y1="16" x2="12.01" y2="16"/>
-              </svg>
-              Informations
-            </div>
-            <div class="ev-info-list">
-              <div *ngIf="event.dateDebut" class="ev-info-item">
-                <div class="ev-info-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/>
-                    <line x1="3" y1="10" x2="21" y2="10"/>
-                  </svg>
-                </div>
-                <div class="ev-info-text">
-                  <span class="ev-info-label">Date &amp; Heure</span>
-                  <span class="ev-info-value">{{ formatDate(event.dateDebut) }}</span>
-                </div>
-              </div>
-
-              <div *ngIf="event.lieu" class="ev-info-item">
-                <div class="ev-info-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                  </svg>
-                </div>
-                <div class="ev-info-text">
-                  <span class="ev-info-label">Lieu</span>
-                  <span class="ev-info-value">{{ event.lieu }}</span>
-                </div>
-              </div>
-
-              <div *ngIf="event.latitude && event.longitude" class="ev-info-item">
-                <div class="ev-info-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="2" y1="12" x2="22" y2="12"/>
-                    <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                  </svg>
-                </div>
-                <div class="ev-info-text">
-                  <span class="ev-info-label">Coordonnées GPS</span>
-                  <span class="ev-info-value ev-coords">{{ event.latitude | number:'1.4-4' }}, {{ event.longitude | number:'1.4-4' }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- CTA -->
-          <div class="ev-cta">
-            <button class="ev-cta-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-              S'inscrire à cet événement
-            </button>
-          </div>
-        </div>
-
-        <!-- Sidebar -->
-        <aside class="ev-details-sidebar">
-
-          <!-- Mini map -->
-          <div class="ev-sidebar-card" *ngIf="event.latitude && event.longitude">
-            <div class="ev-sidebar-card-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-              Localisation
-            </div>
-            <div id="mini-map" class="ev-mini-map"></div>
-            <div class="ev-mini-map-label" *ngIf="event.lieu">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-              {{ event.lieu }}
-            </div>
-          </div>
-
-          <!-- Share card -->
-          <div class="ev-sidebar-card">
-            <div class="ev-sidebar-card-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2">
-                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-              </svg>
-              Partager
-            </div>
-            <div class="ev-share-btns">
-              <button class="ev-share-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                Facebook
-              </button>
-              <button class="ev-share-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-                Twitter
-              </button>
-            </div>
-          </div>
-
-        </aside>
-      </div>
-    </div>
-
-  </ng-container>
 </div>

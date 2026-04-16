@@ -87,6 +87,13 @@
           <h2 class="ev-section-title">Tous les événements</h2>
           <span class="ev-events-badge">{{ events.length }} résultat{{ events.length !== 1 ? 's' : '' }}</span>
         </div>
+        
+        <!-- Barre d'outils admin -->
+        <div *ngIf="authService.isAdmin()" class="admin-toolbar">
+          <button (click)="createEvent()" class="btn-admin btn-create">
+            ➕ Créer un événement
+          </button>
+        </div>
 
         <!-- Empty state -->
         <div *ngIf="events.length === 0" class="ev-state-card ev-state-empty">
@@ -141,6 +148,20 @@
                   </svg>
                   {{ event.lieu }}
                 </div>
+              </div>
+
+              <!-- Boutons admin -->
+              <div *ngIf="authService.isAdmin()" class="admin-actions">
+                <button (click)="$event.stopPropagation(); editEvent(event.id!)" 
+                        class="btn-admin btn-edit"
+                        title="Modifier">
+                  ✏️
+                </button>
+                <button (click)="$event.stopPropagation(); deleteEvent(event.id!)" 
+                        class="btn-admin btn-delete"
+                        title="Supprimer">
+                  🗑️
+                </button>
               </div>
 
               <button class="ev-card-btn" (click)="$event.stopPropagation(); goToDetails(event.id!)">

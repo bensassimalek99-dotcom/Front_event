@@ -2,8 +2,10 @@ import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EventService } from '../../services/event.service';
+import { AuthService } from '../../services/auth.service';
 import { Event } from '../../models/event';
 import * as L from 'leaflet';
+ 
 
 @Component({
     selector: 'app-listing',
@@ -21,7 +23,11 @@ export class ListingComponent implements OnInit, AfterViewInit, OnDestroy {
   /** Skeleton placeholder array for loading state */
   skeletons = Array(6);
 
-  constructor(private eventService: EventService, private router: Router) {}
+  constructor(
+  private eventService: EventService,
+  public authService: AuthService,  // ← DOIT être PUBLIC !
+  private router: Router
+) {}
 
   ngOnInit() {
     this.eventService.getAllEvents().subscribe({
@@ -157,4 +163,32 @@ export class ListingComponent implements OnInit, AfterViewInit, OnDestroy {
   goToDetails(id: number) {
     this.router.navigate(['/event', id]);
   }
+ 
+  createEvent() {
+  this.router.navigate(['/admin/create-event']);
+}
+
+editEvent(id: number) {
+  this.router.navigate(['/admin/edit-event', id]);
+}
+
+deleteEvent(id: number) {
+  if (confirm('Voulez-vous vraiment supprimer cet événement ?')) {
+    this.eventService.deleteEvent(id).subscribe({
+      next: () => {
+        // Retire l'événement de la liste
+        this.events = this.events.filter(e => e.id !== id);
+        // Recharge les marqueurs sur la carte
+        if (this.map) {
+          this.addMarkersToMap(this.events);
+        }
+        alert('Événement supprimé avec succès !');
+      },
+      error: (err) => {
+        console.error('Erreur lors de la suppression:', err);
+        alert('Erreur lors de la suppression de l\'événement');
+      }
+    });
+  }
+}
 }

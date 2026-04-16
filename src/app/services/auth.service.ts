@@ -1,38 +1,108 @@
  import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { LoginRequest, RegisterRequest, AuthResponse } from '../models/auth';
+import { Observable, tap } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  sub: string;
+  exp: number;
+  roles: string[];
+}
+
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+interface RegisterRequest {
+  nom: string;
+  prenom: string;
+  email: string;
+  password: string;
+  adresse: string;
+}
+
+interface AuthResponse {
+  token: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-private apiUrl = '/api/auth'; 
+  private apiUrl = '/api/auth';
 
   constructor(private http: HttpClient) {}
 
-  login(request: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, request);
+  register(data: RegisterRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data).pipe(
+      tap(response => {
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+        }
+      })
+    );
   }
 
-  register(request: RegisterRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, request);
-  }
-
-  saveToken(token: string): void {
-    localStorage.setItem('token', token);
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  login(data: LoginRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, data).pipe(
+      tap(response => {
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+        }
+      })
+    );
   }
 
   logout(): void {
     localStorage.removeItem('token');
   }
 
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
   isAuthenticated(): boolean {
-  return !!this.getToken();
-}
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      const now = Date.now() / 1000;
+      
+      if (decoded.exp < now) {
+        this.logout();
+        return false;
+      }
+      
+      return true;
+    } catch (error) {
+      this.logout();
+      return false;
+    }
+  }
+
+  isAdmin(): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      return decoded.roles?.includes('ROLE_ADMIN') || false;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  getCurrentUser(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      return decoded.sub;
+    } catch (error) {
+      return null;
+    }
+  }
 }

@@ -48,4 +48,5 @@ export const routes: Routes = [
   { path: 'coming-soon', component: ComingSoonComponent },
   { path: 'error-404', component: Error404Component },
   { path: '**', component: Error404Component },
+  
 ];
