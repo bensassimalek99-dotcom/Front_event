@@ -25,7 +25,6 @@ export class EventDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // Récupère l'ID depuis l'URL
     const id = Number(this.route.snapshot.paramMap.get('id'));
     
     if (!id || isNaN(id)) {
@@ -34,14 +33,13 @@ export class EventDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    // Charge l'événement
     this.eventService.getEventById(id).subscribe({
       next: (data) => {
         this.event = data;
         this.loading = false;
       },
       error: (err) => {
-        console.error('Erreur lors du chargement:', err);
+        console.error('Erreur:', err);
         this.errorMessage = 'Impossible de charger cet événement';
         this.loading = false;
       }
@@ -49,7 +47,6 @@ export class EventDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    // Attend un peu que l'événement soit chargé, puis initialise la carte
     setTimeout(() => {
       if (this.event && this.event.latitude && this.event.longitude) {
         this.initMap();
@@ -58,7 +55,6 @@ export class EventDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Nettoie la carte quand on quitte la page
     if (this.map) {
       this.map.remove();
       this.map = null;
@@ -68,18 +64,15 @@ export class EventDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   private initMap() {
     if (!this.event || !this.event.latitude || !this.event.longitude) return;
 
-    // Crée la carte centrée sur l'événement
     this.map = L.map('detail-map').setView(
       [this.event.latitude, this.event.longitude], 
       14
     );
 
-    // Ajoute la couche de tuiles OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
 
-    // Crée un marqueur violet personnalisé
     const violetIcon = L.divIcon({
       className: '',
       html: `
@@ -91,19 +84,12 @@ export class EventDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
           </svg>
         </div>`,
       iconSize: [36, 44],
-      iconAnchor: [18, 44],
-      popupAnchor: [0, -46]
+      iconAnchor: [18, 44]
     });
 
-    // Ajoute le marqueur sur la carte
     L.marker([this.event.latitude, this.event.longitude], { icon: violetIcon })
       .addTo(this.map)
-      .bindPopup(`
-        <div style="text-align: center;">
-          <strong>${this.event.titre}</strong><br>
-          ${this.event.lieu}
-        </div>
-      `);
+      .bindPopup(`<strong>${this.event.titre}</strong><br>${this.event.lieu}`);
   }
 
   formatDate(date: string): string {

@@ -4,7 +4,7 @@
       <h1 class="text-white">{{title}}</h1>
       <div class="breadcrumb-row">
         <ul class="list-inline">
-          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/">Accueil</a></li>
           <ng-container *ngFor="let crumb of breadcrumb; let last = last">
             <li *ngIf="!last && crumb.link"><a [routerLink]="crumb.link">{{crumb.label}}</a></li>
             <li *ngIf="!last && !crumb.link">{{crumb.label}}</li>

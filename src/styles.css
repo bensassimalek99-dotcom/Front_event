@@ -1,7 +1,7 @@
 /* ============================================================
    EVENTURA — Global Styles
 ============================================================ */
-
+@import 'ngx-toastr/toastr';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 /* ---- CSS Custom Properties ---- */
@@ -145,3 +145,21 @@ html { scroll-behavior: smooth; }
 .ev-alert-error  { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
 .ev-alert-success{ background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
 .ev-alert-info   { background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; }
+
+
+/* Custom toast colors */
+.toast-success {
+  background-color: #10b981 !important;
+}
+
+.toast-error {
+  background-color: #ef4444 !important;
+}
+
+.toast-info {
+  background-color: #3b82f6 !important;
+}
+
+.toast-warning {
+  background-color: #f59e0b !important;
+}

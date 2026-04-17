@@ -5,6 +5,7 @@ import { EventService } from '../../services/event.service';
 import { AuthService } from '../../services/auth.service';
 import { Event } from '../../models/event';
 import * as L from 'leaflet';
+import { ToastrService } from 'ngx-toastr';
  
 
 @Component({
@@ -23,25 +24,28 @@ export class ListingComponent implements OnInit, AfterViewInit, OnDestroy {
   /** Skeleton placeholder array for loading state */
   skeletons = Array(6);
 
-  constructor(
+ constructor(
   private eventService: EventService,
-  public authService: AuthService,  // ← DOIT être PUBLIC !
-  private router: Router
+  public authService: AuthService,
+  private router: Router,
+  private toastr: ToastrService // ← NOUVEAU
 ) {}
 
-  ngOnInit() {
-    this.eventService.getAllEvents().subscribe({
-      next: (data) => {
-        this.events = data;
-        this.loading = false;
-        if (this.mapReady) this.addMarkersToMap(data);
-      },
-      error: () => {
-        this.errorMessage = 'Impossible de charger les événements. Vérifiez votre connexion.';
-        this.loading = false;
-      }
-    });
-  }
+ ngOnInit() {
+  this.loading = true; // ← AJOUTE CETTE LIGNE !
+  
+  this.eventService.getAllEvents().subscribe({
+    next: (data) => {
+      this.events = data;
+      this.loading = false;
+      if (this.mapReady) this.addMarkersToMap(data);
+    },
+    error: () => {
+      this.errorMessage = 'Impossible de charger les événements. Vérifiez votre connexion.';
+      this.loading = false;
+    }
+  });
+}
 
   loadEvents() {
     this.eventService.getAllEvents().subscribe({
@@ -176,17 +180,15 @@ deleteEvent(id: number) {
   if (confirm('Voulez-vous vraiment supprimer cet événement ?')) {
     this.eventService.deleteEvent(id).subscribe({
       next: () => {
-        // Retire l'événement de la liste
         this.events = this.events.filter(e => e.id !== id);
-        // Recharge les marqueurs sur la carte
         if (this.map) {
           this.addMarkersToMap(this.events);
         }
-        alert('Événement supprimé avec succès !');
+        this.toastr.success('Événement supprimé avec succès !', 'Succès'); // ← Toast
       },
       error: (err) => {
-        console.error('Erreur lors de la suppression:', err);
-        alert('Erreur lors de la suppression de l\'événement');
+        console.error('Erreur:', err);
+        this.toastr.error('Impossible de supprimer l\'événement', 'Erreur'); // ← Toast
       }
     });
   }
