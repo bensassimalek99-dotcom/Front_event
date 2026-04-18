@@ -1,0 +1,140 @@
+<div class="create-event-page">
+  <div class="container">
+    <div class="page-header">
+      <h1>Créer un événement</h1>
+      <button (click)="cancel()" class="btn-back">
+        ← Retour
+      </button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="event-form">
+      
+      <!-- Titre -->
+      <div class="form-group">
+        <label for="titre">Titre de l'événement *</label>
+        <input 
+          type="text" 
+          id="titre"
+          [(ngModel)]="eventData.titre" 
+          name="titre"
+          class="form-control"
+          placeholder="Ex: Concert de Jazz"
+          required>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea 
+          id="description"
+          [(ngModel)]="eventData.description" 
+          name="description"
+          class="form-control"
+          rows="4"
+          placeholder="Décrivez votre événement..."></textarea>
+      </div>
+
+      <!-- Dates -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dateDebut">Date de début *</label>
+          <input 
+            type="datetime-local" 
+            id="dateDebut"
+            [(ngModel)]="eventData.dateDebut" 
+            name="dateDebut"
+            class="form-control"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="dateFin">Date de fin</label>
+          <input 
+            type="datetime-local" 
+            id="dateFin"
+            [(ngModel)]="eventData.dateFin" 
+            name="dateFin"
+            class="form-control">
+        </div>
+      </div>
+
+      <!-- Lieu -->
+      <div class="form-group">
+        <label for="lieu">Lieu *</label>
+        <input 
+          type="text" 
+          id="lieu"
+          [(ngModel)]="eventData.lieu" 
+          name="lieu"
+          class="form-control"
+          placeholder="Ex: La Marsa, Tunis"
+          required>
+      </div>
+
+      <!-- Coordonnées -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="latitude">Latitude</label>
+          <input 
+            type="number" 
+            id="latitude"
+            [(ngModel)]="eventData.latitude" 
+            name="latitude"
+            class="form-control"
+            step="0.0001"
+            placeholder="36.8065">
+        </div>
+
+        <div class="form-group">
+          <label for="longitude">Longitude</label>
+          <input 
+            type="number" 
+            id="longitude"
+            [(ngModel)]="eventData.longitude" 
+            name="longitude"
+            class="form-control"
+            step="0.0001"
+            placeholder="10.1815">
+        </div>
+      </div>
+
+      <!-- Places & Image -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nbPlaces">Nombre de places</label>
+          <input 
+            type="number" 
+            id="nbPlaces"
+            [(ngModel)]="eventData.nbPlaces" 
+            name="nbPlaces"
+            class="form-control"
+            min="0"
+            placeholder="100">
+        </div>
+
+        <div class="form-group">
+          <label for="imagePath">URL de l'image</label>
+          <input 
+            type="text" 
+            id="imagePath"
+            [(ngModel)]="eventData.imagePath" 
+            name="imagePath"
+            class="form-control"
+            placeholder="https://example.com/image.jpg">
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="form-actions">
+        <button type="button" (click)="cancel()" class="btn btn-secondary">
+          Annuler
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          <span *ngIf="!loading">Créer l'événement</span>
+          <span *ngIf="loading">Création en cours...</span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

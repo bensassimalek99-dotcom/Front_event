@@ -1,0 +1,104 @@
+<div class="manage-inscriptions-page">
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="page-header">
+      <h1>📋 Gestion des inscriptions</h1>
+      <p>Validez ou refusez les demandes d'inscription aux événements</p>
+    </div>
+
+   <!-- Filtres -->
+<div class="filters">
+  <button 
+    (click)="setFilter('TOUS')" 
+    [class.active]="filtreStatut === 'TOUS'"
+    class="filter-btn">
+    Tous ({{ inscriptions.length }})
+  </button>
+  <button 
+    (click)="setFilter('EN_ATTENTE')" 
+    [class.active]="filtreStatut === 'EN_ATTENTE'"
+    class="filter-btn filter-attente">
+    En attente ({{ getCountEnAttente() }})
+  </button>
+  <button 
+    (click)="setFilter('VALIDEE')" 
+    [class.active]="filtreStatut === 'VALIDEE'"
+    class="filter-btn filter-validee">
+    Validées ({{ getCountValidee() }})
+  </button>
+  <button 
+    (click)="setFilter('REFUSEE')" 
+    [class.active]="filtreStatut === 'REFUSEE'"
+    class="filter-btn filter-refusee">
+    Refusées ({{ getCountRefusee() }})
+  </button>
+</div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Chargement des inscriptions...</p>
+    </div>
+
+    <!-- Liste des inscriptions -->
+    <div *ngIf="!loading && filteredInscriptions.length > 0" class="inscriptions-list">
+      
+      <div *ngFor="let inscription of filteredInscriptions" class="inscription-card">
+        
+        <!-- Info utilisateur -->
+        <div class="card-section">
+          <h3>👤 {{ inscription.utilisateurNom }}</h3>
+          <p class="email">✉️ {{ inscription.utilisateurEmail }}</p>
+        </div>
+
+        <!-- Info événement -->
+        <div class="card-section">
+          <h4>📅 {{ inscription.evenementTitre }}</h4>
+          <p>📍 {{ inscription.evenementLieu }}</p>
+          <p>🕐 {{ formatDate(inscription.evenementDateDebut) }}</p>
+        </div>
+
+        <!-- Statut et dates -->
+        <div class="card-section">
+          <div class="status-badge" [ngClass]="getStatutClass(inscription.statut)">
+            {{ inscription.statut }}
+          </div>
+          <p class="date-info">Demande le : {{ formatDate(inscription.dateInscription) }}</p>
+          <p class="date-info" *ngIf="inscription.dateValidation">
+            Traitée le : {{ formatDate(inscription.dateValidation) }}
+          </p>
+        </div>
+
+        <!-- Actions -->
+        <div class="card-actions" *ngIf="inscription.statut === 'EN_ATTENTE'">
+          <button (click)="valider(inscription)" class="btn-valider">
+            ✅ Valider
+          </button>
+          <button (click)="refuser(inscription)" class="btn-refuser">
+            ❌ Refuser
+          </button>
+        </div>
+
+        <!-- Message si déjà traité -->
+        <div class="card-actions" *ngIf="inscription.statut !== 'EN_ATTENTE'">
+          <p class="treated-message">
+            <span *ngIf="inscription.statut === 'VALIDEE'">✅ Inscription validée</span>
+            <span *ngIf="inscription.statut === 'REFUSEE'">❌ Inscription refusée</span>
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Message si aucune inscription -->
+    <div *ngIf="!loading && filteredInscriptions.length === 0" class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h3>Aucune inscription</h3>
+      <p *ngIf="filtreStatut === 'TOUS'">Il n'y a pas encore d'inscription aux événements.</p>
+      <p *ngIf="filtreStatut !== 'TOUS'">Aucune inscription avec le statut "{{ filtreStatut }}".</p>
+    </div>
+
+  </div>
+</div>

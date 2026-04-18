@@ -66,10 +66,15 @@
                 </div>
 
                 <div class="info-item">
-                  <span class="info-label">👥 Places disponibles</span>
-                  <span class="info-value">{{ event.nbPlaces }}</span>
-                </div>
-
+  <span class="info-label">👥 Places disponibles</span>
+  <span class="info-value" *ngIf="!loadingPlaces && placesRestantes !== null">
+    {{ placesRestantes }} / {{ event.nbPlaces }}
+  </span>
+  <span class="info-value" *ngIf="loadingPlaces">Chargement...</span>
+  <span class="info-value" *ngIf="!loadingPlaces && placesRestantes === null">
+    {{ event.nbPlaces }}
+  </span>
+</div>
               </div>
             </section>
 
@@ -85,26 +90,59 @@
           <div class="sidebar-column">
             
             <!-- Card d'inscription -->
-            <div class="register-card">
-              <h3>Participer à cet événement</h3>
-              <div class="register-info">
-                <div class="info-row">
-                  <span>📅</span>
-                  <span>{{ formatDate(event.dateDebut) }}</span>
-                </div>
-                <div class="info-row">
-                  <span>📍</span>
-                  <span>{{ event.lieu }}</span>
-                </div>
-                <div class="info-row">
-                  <span>👥</span>
-                  <span>{{ event.nbPlaces }} places disponibles</span>
-                </div>
-              </div>
-              <button (click)="register()" class="btn-register">
-                S'inscrire maintenant
-              </button>
-            </div>
+<div class="register-card">
+  <h3>Participer à cet événement</h3>
+  
+  <div class="register-info">
+    <div class="info-row">
+      <span>📅</span>
+      <span>{{ formatDate(event.dateDebut) }}</span>
+    </div>
+    <div class="info-row">
+      <span>📍</span>
+      <span>{{ event.lieu }}</span>
+    </div>
+   <div class="info-row">
+  <span>👥</span>
+  <span *ngIf="!loadingPlaces && placesRestantes !== null">
+    {{ placesRestantes }} places restantes
+  </span>
+  <span *ngIf="loadingPlaces">Chargement...</span>
+  <span *ngIf="!loadingPlaces && placesRestantes === null">
+    {{ event.nbPlaces }} places disponibles
+  </span>
+</div>
+  </div>
+
+  <!-- Si pas connecté -->
+  <div *ngIf="!authService.isAuthenticated()" class="auth-required">
+    <p>🔒 Connexion requise</p>
+    <button routerLink="/login" class="btn-register">
+      Se connecter
+    </button>
+  </div>
+
+  <!-- Si connecté mais pas inscrit -->
+  <button 
+  *ngIf="authService.isAuthenticated() && !estInscrit"
+  (click)="sInscrire()" 
+  class="btn-register"
+  [disabled]="inscriptionEnCours || placesRestantes === 0">
+  <span *ngIf="!inscriptionEnCours && placesRestantes !== 0">✅ S'inscrire maintenant</span>
+  <span *ngIf="placesRestantes === 0">🚫 Complet</span>
+  <span *ngIf="inscriptionEnCours">⏳ Inscription...</span>
+</button>
+
+  <!-- Si déjà inscrit -->
+  <div *ngIf="authService.isAuthenticated() && estInscrit" class="inscription-status">
+    <div class="statut-badge" [ngClass]="getStatutClass()">
+      <i class="fa fa-check-circle" *ngIf="statutInscription === 'VALIDEE'"></i>
+      <i class="fa fa-clock-o" *ngIf="statutInscription === 'EN_ATTENTE'"></i>
+      <i class="fa fa-times-circle" *ngIf="statutInscription === 'REFUSEE'"></i>
+      <span>{{ getStatutText() }}</span>
+    </div>
+  </div>
+</div>
 
           </div>
 

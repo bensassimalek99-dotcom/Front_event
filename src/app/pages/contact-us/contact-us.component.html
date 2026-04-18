@@ -1,143 +1,153 @@
-    <!-- Content -->
-    <div class="page-content bg-white">
-        <!-- inner page banner -->
-        <div class="dlab-bnr-inr dlab-bnr-inr-sm overlay-black-middle" style="background-image:url(assets/images/banner/bnr1.jpg);">
-            <div class="container">
-                <div class="dlab-bnr-inr-entry">
-                    <h1 class="text-white">Contactez-nous</h1>
-					<p>Trouvez des endroits, bars, restaurants et activités incroyables.</p>
-					<!-- Breadcrumb row -->
-					<div class="breadcrumb-row">
-						<ul class="list-inline">
-							<li><a routerLink="/">Accueil</a></li>
-							<li>Contactez-nous</li>
-						</ul>
-					</div>
-					<!-- Breadcrumb row END -->
+ <!-- Content -->
+<div class="page-content bg-white">
+    <!-- inner page banner -->
+    <div class="dlab-bnr-inr dlab-bnr-inr-sm overlay-black-middle" style="background-image:url(assets/images/banner/bnr1.jpg);">
+        <div class="container">
+            <div class="dlab-bnr-inr-entry">
+                <h1 class="text-white">Contactez-nous</h1>
+                <p>N'hésitez pas à nous contacter pour toute question.</p>
+                <!-- Breadcrumb row -->
+                <div class="breadcrumb-row">
+                    <ul class="list-inline">
+                        <li><a routerLink="/">Accueil</a></li>
+                        <li>Contact</li>
+                    </ul>
                 </div>
-            </div>
-        </div>
-        <!-- inner page banner END -->
-        <div class="section-full content-inner">
-            <div class="container">
-                <div class="row dzseth m-b50">
-					<div class="col-lg-3 col-md-6 col-sm-6 m-b30">
-						<div class="icon-bx-wraper p-lr20 p-tb50 center seth contact-bx">
-							<div class="icon-bx-sm radius m-b20 bg-primary m-b20">
-								<a href="#" class="icon-cell"><i class="ti-location-pin"></i></a>
-							</div>
-							<div class="icon-content">
-								<h5 class="dlab-tilte text-uppercase">Adresse</h5>
-								<p>123 Rue Principale, Paris 75001 France</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 m-b30">
-						<div class="icon-bx-wraper p-lr20 p-tb50 center seth contact-bx">
-							<div class="icon-bx-sm radius m-b20 bg-primary m-b20">
-								<a href="#" class="icon-cell"><i class="ti-email"></i></a>
-							</div>
-							<div class="icon-content">
-								<h5 class="dlab-tilte text-uppercase">E-mail</h5>
-								<p>info&#64;example.com <br/> info&#64;example.com</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 m-b30">
-						<div class="icon-bx-wraper p-lr20 p-tb50 center seth contact-bx">
-							<div class="icon-bx-sm radius m-b20 bg-primary m-b20">
-								<a href="#" class="icon-cell"><i class="ti-mobile"></i></a>
-							</div>
-							<div class="icon-content">
-								<h5 class="dlab-tilte text-uppercase">Téléphone</h5>
-								<p>+61 3 8376 6284 <br/> +23 123 456 7890</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 m-b30">
-						<div class="icon-bx-wraper p-lr20 p-tb50 center seth contact-bx">
-							<div class="icon-bx-sm radius m-b20 bg-primary m-b20">
-								<a href="#" class="icon-cell"><i class="ti-printer"></i></a>
-							</div>
-							<div class="icon-content">
-								<h5 class="dlab-tilte text-uppercase">Fax</h5>
-								<p>+61 3 8376 6284 <br/> +23 123 456 7890</p>
-							</div>
-						</div>
-					</div>
-				</div>
-                <div class="row">
-					<!-- Left part start -->
-                    <div class="col-lg-6 mb-4 mb-md-0">
-                        <div class="clearfix contact-form  m-b30">
-							<div class="section-head text-black">
-								<h2 class="box-title">Nous contacter</h2>
-								<div class="dlab-separator bg-primary"></div>
-								<p>N'hésitez pas à nous contacter pour toute question ou demande d'information. Notre équipe est disponible pour vous répondre dans les plus brefs délais.</p>
-							</div>
-							<div class="dzFormMsg"></div>
-							<form method="post" class="dzForm" action="script/contact.php">
-								<input type="hidden" value="Contact" name="dzToDo" >
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <input name="dzName" type="text" required class="form-control" placeholder="Votre nom">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="input-group"> 
-											    <input name="dzEmail" type="email" class="form-control" required  placeholder="Votre adresse e-mail" >
-                                            </div>
-                                        </div>
-                                    </div>
-									<div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <input name="dzOther[Phone]" type="text" required class="form-control" placeholder="Téléphone">
-                                            </div>
-                                        </div>
-                                    </div>
-									<div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <input name="dzOther[Subject]" type="text" required class="form-control" placeholder="Sujet">
-                                            </div>
-                                        </div>
-                                    </div>
-                                     <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <textarea name="dzMessage" rows="4" class="form-control" required placeholder="Votre message..."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-									<div class="col-md-12">
-										<div class="recaptcha-bx">
-											<div class="input-group">
-												<div class="g-recaptcha" data-sitekey="<!-- Put reCaptcha Site Key -->" data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></div>
-												<input class="form-control d-none" style="display:none;" data-recaptcha="true" required data-error="Please complete the Captcha">
-											</div>
-										</div>
-									</div>
-                                    <div class="col-md-12">
-                                        <button name="submit" type="submit" value="Submit" class="site-button button-lg radius-xl">ENVOYER</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- Left part END -->
-					<!-- right part start -->
-                    <div class="col-lg-6 d-flex">
-                        <div id="map3" class="m-b30 align-self-stretch" style="width:100%; min-height:300px;"></div>
-                    </div>
-                    <!-- right part END -->
-                </div>
+                <!-- Breadcrumb row END -->
             </div>
         </div>
     </div>
-    <!-- Content END-->
-	<!-- Footer -->
+    <!-- inner page banner END -->
+    
+    <div class="section-full content-inner">
+        <div class="container">
+            <div class="row dzseth m-b50">
+                <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
+                    <div class="icon-bx-wraper p-lr20 p-tb50 center seth contact-bx">
+                        <div class="icon-bx-sm radius m-b20 bg-primary m-b20">
+                            <a href="#" class="icon-cell"><i class="ti-location-pin"></i></a>
+                        </div>
+                        <div class="icon-content">
+                            <h5 class="dlab-tilte text-uppercase">Adresse</h5>
+                            <p>Tunis, Tunisie</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
+                    <div class="icon-bx-wraper p-lr20 p-tb50 center seth contact-bx">
+                        <div class="icon-bx-sm radius m-b20 bg-primary m-b20">
+                            <a href="#" class="icon-cell"><i class="ti-email"></i></a>
+                        </div>
+                        <div class="icon-content">
+                            <h5 class="dlab-tilte text-uppercase">E-mail</h5>
+                            <p>contact&#64;eventura.tn</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
+                    <div class="icon-bx-wraper p-lr20 p-tb50 center seth contact-bx">
+                        <div class="icon-bx-sm radius m-b20 bg-primary m-b20">
+                            <a href="#" class="icon-cell"><i class="ti-mobile"></i></a>
+                        </div>
+                        <div class="icon-content">
+                            <h5 class="dlab-tilte text-uppercase">Téléphone</h5>
+                            <p>+216 XX XXX XXX</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <!-- Left part start -->
+                <div class="col-lg-12">
+                    <div class="clearfix contact-form m-b30">
+                        <div class="section-head text-black text-center">
+                            <h2 class="box-title">Nous contacter</h2>
+                            <div class="dlab-separator bg-primary"></div>
+                            <p>N'hésitez pas à nous contacter pour toute question ou demande d'information. Notre équipe est disponible pour vous répondre dans les plus brefs délais.</p>
+                        </div>
+                        
+                        <form (ngSubmit)="onSubmit()" class="dzForm" style="max-width: 800px; margin: 0 auto;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input 
+                                                [(ngModel)]="contactData.nom"
+                                                name="nom"
+                                                type="text" 
+                                                required 
+                                                class="form-control" 
+                                                placeholder="Votre nom *">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group"> 
+                                            <input 
+                                                [(ngModel)]="contactData.email"
+                                                name="email"
+                                                type="email" 
+                                                class="form-control" 
+                                                required  
+                                                placeholder="Votre adresse e-mail *">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input 
+                                                [(ngModel)]="contactData.telephone"
+                                                name="telephone"
+                                                type="text" 
+                                                class="form-control" 
+                                                placeholder="Téléphone">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input 
+                                                [(ngModel)]="contactData.sujet"
+                                                name="sujet"
+                                                type="text" 
+                                                class="form-control" 
+                                                placeholder="Sujet">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <textarea 
+                                                [(ngModel)]="contactData.message"
+                                                name="message"
+                                                rows="4" 
+                                                class="form-control" 
+                                                required 
+                                                placeholder="Votre message... *"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <button 
+                                        type="submit" 
+                                        class="site-button button-lg radius-xl"
+                                        [disabled]="loading">
+                                        <span *ngIf="!loading">ENVOYER</span>
+                                        <span *ngIf="loading">ENVOI EN COURS...</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Left part END -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content END-->

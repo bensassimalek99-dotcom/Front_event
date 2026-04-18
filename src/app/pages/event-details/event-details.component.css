@@ -234,4 +234,54 @@
   .sidebar-column {
     position: static;
   }
+
+  /* Auth required */
+.auth-required {
+  text-align: center;
+  padding: 16px 0;
+}
+
+.auth-required p {
+  margin-bottom: 12px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Inscription status */
+.inscription-status {
+  padding: 16px 0;
+}
+
+.statut-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.statut-attente {
+  background: #fef3c7;
+  color: #92400e;
+  border: 2px solid #fbbf24;
+}
+
+.statut-validee {
+  background: #d1fae5;
+  color: #065f46;
+  border: 2px solid #10b981;
+}
+
+.statut-refusee {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 2px solid #ef4444;
+}
+
+.statut-badge i {
+  font-size: 18px;
+}
 }

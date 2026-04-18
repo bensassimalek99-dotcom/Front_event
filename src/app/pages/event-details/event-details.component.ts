@@ -1,27 +1,42 @@
- import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EventService } from '../../services/event.service';
+import { InscriptionService } from '../../services/inscription.service';
+import { AuthService } from '../../services/auth.service';
 import { Event } from '../../models/event';
+import { StatutInscription } from '../../models/inscription';
+import { ToastrService } from 'ngx-toastr';
 import * as L from 'leaflet';
 
 @Component({
   selector: 'app-event-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.css']
 })
-export class EventDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class EventDetailsComponent implements OnInit, OnDestroy {
   event: Event | null = null;
   loading = true;
-  errorMessage = '';
-  private map: L.Map | null = null;
+  errorMessage: string | null = null;
+  map: L.Map | null = null;
+  
+  // Inscription
+  estInscrit = false;
+  statutInscription: StatutInscription | null = null;
+  inscriptionEnCours = false;
+
+  placesRestantes: number | null = null;
+loadingPlaces = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private eventService: EventService
+    private eventService: EventService,
+    private inscriptionService: InscriptionService,
+    public authService: AuthService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -33,81 +48,149 @@ export class EventDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
+    this.loadEvent(id);
+    this.checkInscription(id);
+  }
+
+  loadEvent(id: number) {
     this.eventService.getEventById(id).subscribe({
-      next: (data) => {
-        this.event = data;
+      next: (event) => {
+        this.event = event;
+        this.loadPlacesRestantes();
         this.loading = false;
+        
+        setTimeout(() => {
+          this.initMap();
+        }, 100);
       },
       error: (err) => {
-        console.error('Erreur:', err);
-        this.errorMessage = 'Impossible de charger cet événement';
+        console.error('Erreur chargement événement:', err);
+        this.errorMessage = 'Impossible de charger l\'événement';
         this.loading = false;
       }
     });
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      if (this.event && this.event.latitude && this.event.longitude) {
-        this.initMap();
-      }
-    }, 100);
-  }
-
-  ngOnDestroy() {
-    if (this.map) {
-      this.map.remove();
-      this.map = null;
+  checkInscription(evenementId: number) {
+    if (!this.authService.isAuthenticated()) {
+      return;
     }
+
+    this.inscriptionService.checkInscription(evenementId).subscribe({
+      next: (response) => {
+        this.estInscrit = response.inscrit;
+        this.statutInscription = response.statut || null;
+      },
+      error: (err) => {
+        console.error('Erreur vérification inscription:', err);
+      }
+    });
   }
 
-  private initMap() {
-    if (!this.event || !this.event.latitude || !this.event.longitude) return;
+  sInscrire() {
+    if (!this.event) return;
 
-    this.map = L.map('detail-map').setView(
-      [this.event.latitude, this.event.longitude], 
-      14
-    );
+    if (!this.authService.isAuthenticated()) {
+      this.toastr.info('Veuillez vous connecter pour vous inscrire', 'Connexion requise');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.inscriptionEnCours = true;
+
+    this.inscriptionService.inscrire({ evenementId: this.event.id! }).subscribe({
+      next: (inscription) => {
+        this.inscriptionEnCours = false;
+        this.estInscrit = true;
+        this.statutInscription = inscription.statut;
+        this.toastr.success('Inscription enregistrée ! En attente de validation par l\'admin.', 'Succès');
+      },
+      error: (err) => {
+        this.inscriptionEnCours = false;
+        console.error('Erreur inscription:', err);
+        const message = err.error?.error || 'Impossible de s\'inscrire';
+        this.toastr.error(message, 'Erreur');
+      }
+    });
+  }
+
+  initMap() {
+    if (!this.event || this.map) return;
+
+    this.map = L.map('detail-map').setView([this.event.latitude, this.event.longitude], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
+      attribution: '© OpenStreetMap contributors'
     }).addTo(this.map);
 
-    const violetIcon = L.divIcon({
-      className: '',
-      html: `
-        <div style="width:36px; height:44px; filter: drop-shadow(0 3px 6px rgba(102,126,234,0.5));">
-          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
-            <path d="M18 0C8.06 0 0 8.06 0 18C0 31.5 18 44 18 44C18 44 36 31.5 36 18C36 8.06 27.94 0 18 0Z" fill="#667eea"/>
-            <circle cx="18" cy="18" r="8" fill="white" opacity="0.95"/>
-            <circle cx="18" cy="18" r="4" fill="#667eea"/>
-          </svg>
-        </div>`,
-      iconSize: [36, 44],
-      iconAnchor: [18, 44]
-    });
-
-    L.marker([this.event.latitude, this.event.longitude], { icon: violetIcon })
+    L.marker([this.event.latitude, this.event.longitude])
       .addTo(this.map)
-      .bindPopup(`<strong>${this.event.titre}</strong><br>${this.event.lieu}`);
+      .bindPopup(`<b>${this.event.titre}</b><br>${this.event.lieu}`)
+      .openPopup();
   }
 
-  formatDate(date: string): string {
-    if (!date) return '';
-    return new Date(date).toLocaleDateString('fr-FR', {
-      day: 'numeric',
-      month: 'long',
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('fr-FR', {
+      weekday: 'long',
       year: 'numeric',
+      month: 'long',
+      day: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
     });
+  }
+
+  getStatutText(): string {
+    switch (this.statutInscription) {
+      case StatutInscription.EN_ATTENTE:
+        return 'En attente de validation';
+      case StatutInscription.VALIDEE:
+        return 'Inscription validée';
+      case StatutInscription.REFUSEE:
+        return 'Inscription refusée';
+      default:
+        return '';
+    }
+  }
+
+  getStatutClass(): string {
+    switch (this.statutInscription) {
+      case StatutInscription.EN_ATTENTE:
+        return 'statut-attente';
+      case StatutInscription.VALIDEE:
+        return 'statut-validee';
+      case StatutInscription.REFUSEE:
+        return 'statut-refusee';
+      default:
+        return '';
+    }
   }
 
   goBack() {
     this.router.navigate(['/listing']);
   }
 
-  register() {
-    alert('Fonctionnalité d\'inscription à venir !');
+  loadPlacesRestantes() {
+  if (!this.event?.id) return;
+  
+  this.loadingPlaces = true;
+  
+  this.eventService.getPlacesRestantes(this.event.id).subscribe({
+    next: (places) => {
+      this.placesRestantes = places;
+      this.loadingPlaces = false;
+    },
+    error: (err) => {
+      console.error('Erreur chargement places:', err);
+      this.loadingPlaces = false;
+    }
+  });
+}
+
+  ngOnDestroy() {
+    if (this.map) {
+      this.map.remove();
+    }
   }
 }

@@ -1,4 +1,4 @@
-export interface Event {
+ export interface Event {
   id?: number;
   titre: string;
   description: string;
@@ -12,12 +12,13 @@ export interface Event {
 }
 
 export interface EventRequest {
-  title: string;
+  titre: string;
   description: string;
-  date: string;
-  location: string;
+  dateDebut: string;
+  dateFin: string;
+  lieu: string;
   latitude: number;
   longitude: number;
-  imageUrl?: string;
-  category?: string;
+  nbPlaces: number;
+  imagePath?: string;
 }
