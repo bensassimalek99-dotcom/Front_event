@@ -40,3 +40,11 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Fichiers sensibles - ne pas envoyer sur GitHub
+src/main/resources/application.properties
+src/main/resources/application-prod.properties
+
+# Fichier avec les vrais secrets (tu créeras ce fichier plus tard)
+*.env
+.env
