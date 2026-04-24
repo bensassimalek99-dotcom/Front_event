@@ -6,8 +6,10 @@ export const authGuard = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
+  const token = localStorage.getItem('token');
+  console.log('TOKEN dans guard:', token);
+
   if (authService.isAuthenticated()) {
-    console.log;
     return true;
   }
   
