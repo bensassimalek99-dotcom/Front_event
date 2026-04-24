@@ -8,8 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class ContactService {
-  private apiUrl = `${environment.apiUrl}/api/contact`;
-
+  private apiUrl = 'https://eventura-backend-hfa0g8f7cvcfhmce.italynorth-01.azurewebsites.net/api/contact';
   constructor(private http: HttpClient) {}
 
   sendMessage(contact: ContactRequest): Observable<any> {

@@ -8,8 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class InscriptionService {
-  private apiUrl = `${environment.apiUrl}/api/inscriptions`;
-
+  private apiUrl = 'https://eventura-backend-hfa0g8f7cvcfhmce.italynorth-01.azurewebsites.net/api/inscriptions';
   constructor(private http: HttpClient) {}
 
   inscrire(request: InscriptionRequest): Observable<Inscription> {
