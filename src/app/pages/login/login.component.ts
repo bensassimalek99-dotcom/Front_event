@@ -24,7 +24,6 @@ export class LoginComponent {
   ) {}
 
   onSubmit() {
-    // Validation basique
     if (!this.loginData.email || !this.loginData.password) {
       this.toastr.error('Veuillez remplir tous les champs', 'Erreur');
       return;
@@ -36,22 +35,19 @@ export class LoginComponent {
     this.authService.login(this.loginData).subscribe({
       next: (response) => {
         this.loading = false;
-        this.toastr.success('Connexion réussie !', 'Bienvenue');
-        setTimeout(() => {
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+          this.toastr.success('Connexion réussie !', 'Bienvenue');
           this.router.navigate(['/listing']);
-        }, 1000);
+        } else {
+          this.errorMessage = 'Token manquant dans la réponse';
+          this.toastr.error(this.errorMessage, 'Erreur');
+        }
       },
       error: (err) => {
         this.loading = false;
-        console.error('Erreur login:', err);
-        
-        if (err.status === 401) {
-          this.errorMessage = 'Email ou mot de passe incorrect';
-          this.toastr.error('Email ou mot de passe incorrect', 'Erreur');
-        } else {
-          this.errorMessage = 'Une erreur est survenue';
-          this.toastr.error('Impossible de se connecter', 'Erreur');
-        }
+        this.errorMessage = err?.error?.message || 'Email ou mot de passe incorrect';
+        this.toastr.error(this.errorMessage, 'Erreur de connexion');
       }
     });
   }
@@ -59,4 +55,5 @@ export class LoginComponent {
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
+  
 }

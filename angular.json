@@ -93,36 +93,30 @@
             ]
           },
           "configurations": {
-            "production": {
-              "optimization": {
-                "styles": {
-                  "inlineCritical": false
-                }
-              },
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "5MB",
-                  "maximumError": "10MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "100kB",
-                  "maximumError": "200kB"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "optimization": {
-  "scripts": true,
-  "styles": {
-    "minify": true,
-    "inlineCritical": true,
-    "inlineFonts": false
-  },
-  "fonts": false
+           "production": {
+  "fileReplacements": [
+    {
+      "replace": "src/environments/environment.ts",
+      "with": "src/environments/environment.prod.ts"
+    }
+  ],
+  "optimization": true,
+  "budgets": [
+    {
+      "type": "initial",
+      "maximumWarning": "5MB",
+      "maximumError": "10MB"
+    },
+    {
+      "type": "anyComponentStyle",
+      "maximumWarning": "100kB",
+      "maximumError": "200kB"
+    }
+  ],
+  "outputHashing": "all"
 },
+            "development": {
+             "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
             }

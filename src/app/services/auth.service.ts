@@ -2,6 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../environments/environment';
 
 interface JwtPayload {
   sub: string;
@@ -24,14 +25,16 @@ interface RegisterRequest {
 
 interface AuthResponse {
   token: string;
+  email?: string;
+  nom?: string;
+  prenom?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = '/api/auth';
-
+  private apiUrl = `${environment.apiUrl}/api/auth`;
   constructor(private http: HttpClient) {}
 
   register(data: RegisterRequest): Observable<AuthResponse> {
@@ -58,30 +61,25 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
+ getToken(): string | null {
+  return localStorage.getItem('token') || sessionStorage.getItem('token');
+}
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    if (!token) return false;
-    
-    try {
-      const decoded = jwtDecode<JwtPayload>(token);
-      const now = Date.now() / 1000;
-      
-      if (decoded.exp < now) {
-        this.logout();
-        return false;
-      }
-      
-      return true;
-    } catch (error) {
-      this.logout();
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  if (!token) return false;
+  try {
+    const decoded = jwtDecode<JwtPayload>(token);
+    const now = Date.now() / 1000;
+    if (decoded.exp < now) {
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
       return false;
     }
+    return true;
+  } catch (error) {
+    return false;
   }
-
+}
   isAdmin(): boolean {
     const token = localStorage.getItem('token');
     if (!token) return false;
