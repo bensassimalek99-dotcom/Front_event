@@ -34,7 +34,7 @@ interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://eventura-backend-hfa0g8f7cvcfhmce.italynorth-01.azurewebsites.net/api/auth';
+  private apiUrl = `${environment.apiUrl}/auth`;
   constructor(private http: HttpClient) {}
 
   register(data: RegisterRequest): Observable<AuthResponse> {
@@ -65,18 +65,23 @@ export class AuthService {
   return localStorage.getItem('token') || sessionStorage.getItem('token');
 }
   isAuthenticated(): boolean {
-  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
+  console.log('isAuthenticated - token:', token ? 'présent' : 'null');
   if (!token) return false;
+  
   try {
     const decoded = jwtDecode<JwtPayload>(token);
     const now = Date.now() / 1000;
+    console.log('decoded:', decoded);
+    console.log('exp:', decoded.exp, 'now:', now, 'valid:', decoded.exp > now);
+    
     if (decoded.exp < now) {
-      localStorage.removeItem('token');
-      sessionStorage.removeItem('token');
+      this.logout();
       return false;
     }
     return true;
   } catch (error) {
+    console.log('decode error:', error);
     return false;
   }
 }
@@ -86,7 +91,7 @@ export class AuthService {
     
     try {
       const decoded = jwtDecode<JwtPayload>(token);
-      return decoded.roles?.includes('ROLE_ADMIN') || false;
+      return decoded.roles?.includes('ADMIN') || false;
     } catch (error) {
       return false;
     }

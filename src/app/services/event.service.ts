@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class EventService {
 
-  private apiUrl = 'https://eventura-backend-hfa0g8f7cvcfhmce.italynorth-01.azurewebsites.net/api/events';
+  private apiUrl = `${environment.apiUrl}/events`;
 
   constructor(private http: HttpClient) {}
 

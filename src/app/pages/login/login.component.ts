@@ -33,17 +33,19 @@ export class LoginComponent {
     this.errorMessage = '';
 
     this.authService.login(this.loginData).subscribe({
-      next: (response) => {
-        this.loading = false;
-        if (response.token) {
-          localStorage.setItem('token', response.token);
-          this.toastr.success('Connexion réussie !', 'Bienvenue');
-          this.router.navigate(['/listing']);
-        } else {
-          this.errorMessage = 'Token manquant dans la réponse';
-          this.toastr.error(this.errorMessage, 'Erreur');
-        }
-      },
+     next: (response) => {
+  this.loading = false;
+  if (response.token) {
+    localStorage.setItem('token', response.token);
+    this.toastr.success('Connexion réussie !', 'Bienvenue');
+    setTimeout(() => {
+      this.router.navigate(['/listing']);
+    }, 100);
+  } else {
+    this.errorMessage = 'Token manquant dans la réponse';
+    this.toastr.error(this.errorMessage, 'Erreur');
+  }
+},
       error: (err) => {
         this.loading = false;
         this.errorMessage = err?.error?.message || 'Email ou mot de passe incorrect';

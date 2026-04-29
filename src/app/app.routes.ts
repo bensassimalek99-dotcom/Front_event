@@ -7,6 +7,7 @@ import { EventDetailsComponent } from './pages/event-details/event-details.compo
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { authGuard } from './guards/auth.guard';
+import { adminGuard } from './guards/admin.guard';
 import { CreateEventComponent } from './pages/admin/create-event/create-event.component';
 import { EditEventComponent } from './pages/admin/edit-event/edit-event.component';
 import { ManageInscriptionsComponent } from './pages/admin/manage-inscriptions/manage-inscriptions.component';
@@ -28,21 +29,21 @@ export const routes: Routes = [
   { path: 'contact-us', component: ContactUsComponent },
   
   // Admin routes
-{ 
-  path: 'admin/create-event', 
-  component: CreateEventComponent, 
-  canActivate: [authGuard] 
+{
+  path: 'admin/create-event',
+  component: CreateEventComponent,
+  canActivate: [adminGuard]
 },
-{ 
-  path: 'admin/edit-event/:id', 
-  component: EditEventComponent, 
-  canActivate: [authGuard] 
-}, 
+{
+  path: 'admin/edit-event/:id',
+  component: EditEventComponent,
+  canActivate: [adminGuard]
+},
 
-{ 
-  path: 'admin/inscriptions', 
-  component: ManageInscriptionsComponent, 
-  canActivate: [authGuard] 
+{
+  path: 'admin/inscriptions',
+  component: ManageInscriptionsComponent,
+  canActivate: [adminGuard]
 },
 
 // Erreur 404 - Toute route non trouvée
